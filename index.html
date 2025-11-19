@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>英语专业大学生就业模拟器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
@@ -20,6 +21,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%2300a8b5" stroke-width="0.5" opacity="0.3"/></svg>');
+            z-index: -1;
         }
         
         .container {
@@ -31,6 +45,18 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             border: 1px solid #00a8b5;
+            position: relative;
+        }
+        
+        .container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00e5ff, #00a8b5, #00e5ff);
+            z-index: 10;
         }
         
         header {
@@ -38,6 +64,7 @@
             padding: 15px;
             text-align: center;
             border-bottom: 2px solid #00a8b5;
+            position: relative;
         }
         
         h1 {
@@ -45,6 +72,18 @@
             margin-bottom: 8px;
             color: #00e5ff;
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00e5ff, transparent);
         }
         
         .subtitle {
@@ -70,6 +109,30 @@
             padding: 12px;
             text-align: center;
             border: 1px solid #00a8b5;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 168, 181, 0.4);
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00e5ff, #00a8b5);
+        }
+        
+        .stat-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: #00e5ff;
         }
         
         .stat-value {
@@ -96,6 +159,7 @@
             height: 100%;
             background: linear-gradient(90deg, #00e5ff, #00a8b5);
             border-radius: 4px;
+            transition: width 0.5s ease;
         }
         
         .time-display {
@@ -105,6 +169,18 @@
             text-align: center;
             margin-bottom: 15px;
             border: 1px solid #00a8b5;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .time-display::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd166, #00e5ff);
         }
         
         .month-year {
@@ -120,6 +196,7 @@
             border-radius: 0 8px 8px 0;
             margin: 15px 0;
             display: none;
+            animation: fadeIn 0.5s ease;
         }
         
         .feedback-display {
@@ -128,6 +205,7 @@
             padding: 12px;
             border-radius: 0 8px 8px 0;
             margin: 15px 0;
+            animation: fadeIn 0.5s ease;
         }
         
         .story-text {
@@ -139,6 +217,18 @@
             font-size: 1rem;
             line-height: 1.5;
             border-left: 4px solid #00a8b5;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-text::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #00a8b5, #00e5ff);
         }
         
         .choices {
@@ -160,6 +250,23 @@
             text-align: left;
             box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .choice-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .choice-btn:hover::before {
+            left: 100%;
         }
         
         .choice-btn:hover {
@@ -187,6 +294,18 @@
             margin-top: 15px;
             display: none;
             border: 1px solid #00a8b5;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .career-path::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00e5ff, #66fcf1);
         }
         
         .career-title {
@@ -208,6 +327,18 @@
             margin-top: 15px;
             display: none;
             border: 1px solid #00a8b5;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagnosis-report::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd166, #00e5ff);
         }
         
         .report-title {
@@ -224,6 +355,27 @@
         .report-section h3 {
             color: #00e5ff;
             margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .report-section h3::before {
+            content: "\f05a";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #ffd166;
+        }
+        
+        .report-section ul {
+            padding-left: 20px;
+        }
+        
+        .report-section li {
+            margin-bottom: 8px;
+            line-height: 1.4;
         }
         
         .restart-btn {
@@ -238,6 +390,23 @@
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .restart-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .restart-btn:hover::before {
+            left: 100%;
         }
         
         .restart-btn:hover {
@@ -253,6 +422,54 @@
             border-top: 1px solid rgba(0, 168, 181, 0.5);
         }
         
+        /* Achievement system */
+        .achievements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .achievement {
+            background: rgba(0, 80, 100, 0.4);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #00a8b5;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        
+        .achievement.unlocked {
+            opacity: 1;
+            background: rgba(0, 120, 150, 0.6);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        }
+        
+        .achievement i {
+            color: #ffd166;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive design */
         @media (max-width: 768px) {
             .container {
                 border-radius: 10px;
@@ -345,7 +562,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>英语专业大学生就业模拟器</h1>
+            <h1><i class="fas fa-graduation-cap"></i> 英语专业大学生就业模拟器</h1>
             <p class="subtitle">为你的未来职业做好准备</p>
         </header>
         
@@ -356,6 +573,7 @@
             
             <div class="stats">
                 <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-book"></i></div>
                     <div class="stat-label">英语专业技能</div>
                     <div class="stat-value" id="skill-value">20</div>
                     <div class="progress-bar">
@@ -363,6 +581,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
                     <div class="stat-label">社会实践经验</div>
                     <div class="stat-value" id="experience-value">20</div>
                     <div class="progress-bar">
@@ -370,6 +589,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-label">人脉关系</div>
                     <div class="stat-value" id="network-value">20</div>
                     <div class="progress-bar">
@@ -377,12 +597,17 @@
                     </div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-heartbeat"></i></div>
                     <div class="stat-label">心理健康</div>
                     <div class="stat-value" id="mental-value">100</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="mental-progress" style="width: 100%"></div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="achievements" id="achievements-container">
+                <!-- 成就将通过JavaScript动态生成 -->
             </div>
             
             <div class="event-display" id="event-display">
@@ -437,7 +662,9 @@
             eventsThisYear: 0, // 今年触发的事件数
             lastEventMonth: -1, // 上次事件触发的月份
             choicesHistory: [], // 选择历史记录
-            restCount: 0 // 休息次数统计
+            restCount: 0, // 休息次数统计
+            achievements: [], // 已解锁成就
+            totalChoicesMade: 0 // 总共做出的选择数
         };
 
         // 月份映射
@@ -451,6 +678,16 @@
         const years = {
             1: '大一', 2: '大二', 3: '大三', 4: '大四'
         };
+
+        // 成就系统
+        const achievements = [
+            { id: 'first_choice', name: '第一步', description: '做出第一个选择', icon: 'fa-star', unlocked: false },
+            { id: 'skill_50', name: '语言达人', description: '英语技能达到50点', icon: 'fa-book', unlocked: false },
+            { id: 'network_50', name: '社交高手', description: '人脉关系达到50点', icon: 'fa-users', unlocked: false },
+            { id: 'experience_50', name: '实践专家', description: '实践经验达到50点', icon: 'fa-briefcase', unlocked: false },
+            { id: 'rest_5', name: '健康第一', description: '累计休息5次', icon: 'fa-heartbeat', unlocked: false },
+            { id: 'graduate', name: '毕业啦！', description: '顺利完成大学生涯', icon: 'fa-graduation-cap', unlocked: false }
+        ];
 
         // 随机事件
         const randomEvents = [
@@ -513,6 +750,26 @@
             {
                 text: "你因为一次小组作业中表现出色，被老师推荐为优秀学生代表。",
                 effect: { englishSkill: [3, 5], network: [2, 4] }
+            },
+            {
+                text: "你参加了一个英语辩论赛并获得最佳辩手称号，极大地提升了思辨能力。",
+                effect: { englishSkill: [3, 5], network: [2, 4] }
+            },
+            {
+                text: "你成功通过了专业八级考试，这是对你英语水平的极大认可。",
+                effect: { englishSkill: [4, 6] }
+            },
+            {
+                text: "你参与了一个翻译项目，获得了宝贵的实践经验。",
+                effect: { englishSkill: [2, 4], experience: [2, 3] }
+            },
+            {
+                text: "你成为了学院学生会主席，锻炼了领导能力。",
+                effect: { network: [5, 7], experience: [3, 5] }
+            },
+            {
+                text: "你获得了一个国际组织的实习机会，开阔了国际视野。",
+                effect: { englishSkill: [4, 6], experience: [4, 6], network: [3, 5] }
             }
         ];
 
@@ -525,7 +782,9 @@
             "你的决策体现了成熟的想法",
             "这个选择为你打开了新的可能性",
             "看起来你对自己的未来有清晰的规划",
-            "这个决定将为你的人际关系带来积极影响"
+            "这个决定将为你的人际关系带来积极影响",
+            "你的选择体现了对自身发展的重视",
+            "这是一个具有前瞻性的决定"
         ];
 
         // 场景定义（基于英语专业四年规划）
@@ -783,27 +1042,77 @@
                 ]
             },
             'year2-june': {
-                text: " summer vacation is approaching. You need to plan how to spend your summer break effectively.",
+                text: "暑假即将到来。你需要计划如何有效度过这个假期。",
                 choices: [
                     { 
-                        text: "Apply for a summer internship at a foreign company", 
+                        text: "申请外国公司的暑期实习", 
                         effect: { experience: [3, 5], network: [2, 4] },
-                        feedback: "Internship experience will greatly enhance your resume"
+                        feedback: "实习经验将大大提高你的简历质量"
                     },
                     { 
-                        text: "Take an intensive English training course", 
+                        text: "参加强化英语培训课程", 
                         effect: { englishSkill: [3, 5] },
-                        feedback: "Intensive training can significantly improve your language skills"
+                        feedback: "强化培训能显著提高你的语言技能"
                     },
                     { 
-                        text: "Travel to an English-speaking country for cultural exchange", 
+                        text: "前往英语国家进行文化交流", 
                         effect: { englishSkill: [2, 4], experience: [2, 3] },
-                        feedback: "Cultural exchange broadens your horizons"
+                        feedback: "文化交流能拓宽你的视野"
                     },
                     { 
-                        text: "Rest and relax to recharge your energy", 
+                        text: "休息放松以恢复精力", 
                         effect: { mentalHealth: [5, 10] },
-                        feedback: "Proper rest helps maintain good mental health"
+                        feedback: "适当的休息有助于保持良好的心理健康"
+                    }
+                ]
+            },
+            'year2-july': {
+                text: "暑假期间，你有机会参加各种活动。如何合理安排时间？",
+                choices: [
+                    { 
+                        text: "参加在线英语学习社区", 
+                        effect: { englishSkill: [2, 3], network: [1, 2] },
+                        feedback: "在线社区能让你接触到全球英语学习者"
+                    },
+                    { 
+                        text: "阅读英文原著小说", 
+                        effect: { englishSkill: [2, 4] },
+                        feedback: "阅读原著能提升你的文学素养"
+                    },
+                    { 
+                        text: "参与志愿服务活动", 
+                        effect: { experience: [1, 3], network: [1, 2] },
+                        feedback: "志愿服务能培养你的社会责任感"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
+                    }
+                ]
+            },
+            'year2-august': {
+                text: "暑假即将结束，新学期马上开始。你需要为新学期做好准备。",
+                choices: [
+                    { 
+                        text: "总结暑假收获并与同学分享", 
+                        effect: { network: [1, 2], experience: [0, 1] },
+                        feedback: "分享经历既能巩固所学，又能增进友谊"
+                    },
+                    { 
+                        text: "制定新学期学习计划", 
+                        effect: { englishSkill: [1, 2] },
+                        feedback: "明确的目标能指引你更有针对性地努力"
+                    },
+                    { 
+                        text: "预习新学期课程内容", 
+                        effect: { englishSkill: [1, 2] },
+                        feedback: "提前预习能让你在新学期学习中占据主动"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
                     }
                 ]
             },
@@ -883,8 +1192,83 @@
                     }
                 ]
             },
+            'year3-december': {
+                text: "期末考试临近，同时你也需要为来年的求职或升学做准备。时间紧迫，如何平衡？",
+                choices: [
+                    { 
+                        text: "制定详细的复习和求职计划", 
+                        effect: { englishSkill: [2, 3], experience: [1, 2] },
+                        feedback: "合理的计划能帮助你高效利用时间"
+                    },
+                    { 
+                        text: "参加模拟面试和求职培训", 
+                        effect: { experience: [2, 4], network: [1, 2] },
+                        feedback: "模拟面试能提升你的求职竞争力"
+                    },
+                    { 
+                        text: "完善个人简历和作品集", 
+                        effect: { experience: [2, 3] },
+                        feedback: "完善的材料是求职成功的前提"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
+                    }
+                ]
+            },
+            'year3-january': {
+                text: "寒假来了，你可以利用这段时间进一步提升自己。考研或求职都需要充分准备。",
+                choices: [
+                    { 
+                        text: "参加考研辅导班", 
+                        effect: { englishSkill: [3, 5] },
+                        feedback: "专业辅导能提高复习效率"
+                    },
+                    { 
+                        text: "寻找寒假实习机会", 
+                        effect: { experience: [3, 5] },
+                        feedback: "寒假实习能让你积累更多经验"
+                    },
+                    { 
+                        text: "准备各类证书考试", 
+                        effect: { englishSkill: [2, 4] },
+                        feedback: "证书是专业能力的重要证明"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
+                    }
+                ]
+            },
+            'year3-february': {
+                text: "新学期即将开始，你已进入大学最关键的一年。为即将到来的毕业季做好准备。",
+                choices: [
+                    { 
+                        text: "参加春季招聘会", 
+                        effect: { experience: [2, 4], network: [2, 3] },
+                        feedback: "招聘会是寻找工作机会的重要途径"
+                    },
+                    { 
+                        text: "完善毕业论文开题报告", 
+                        effect: { englishSkill: [2, 3] },
+                        feedback: "高质量的论文是学术能力的体现"
+                    },
+                    { 
+                        text: "提升个人技能（如计算机、第二外语）", 
+                        effect: { englishSkill: [1, 2] },
+                        feedback: "多元化技能增强就业竞争力"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
+                    }
+                ]
+            },
             // 大四场景（冲刺期）
-            'year4-may': {
+            'year4-march': {
                 text: "毕业季来临，你需要为毕业后的生活做最终决定。根据你的积累，现在是时候选择你的职业道路了。",
                 choices: [
                     { 
@@ -916,6 +1300,56 @@
                         text: "从事媒体/出版行业", 
                         condition: () => gameState.englishSkill >= 45 && gameState.experience >= 10,
                         feedback: "你的专业背景让你在媒体行业具备竞争优势"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
+                    }
+                ]
+            },
+            'year4-april': {
+                text: "你已经做出了职业选择，现在需要为实现目标而努力。距离毕业还有几个月时间。",
+                choices: [
+                    { 
+                        text: "完善求职材料和作品集", 
+                        effect: { experience: [2, 3] },
+                        feedback: "完善的材料是求职成功的前提"
+                    },
+                    { 
+                        text: "参加各类招聘会和宣讲会", 
+                        effect: { experience: [2, 4], network: [2, 3] },
+                        feedback: "积极参与招聘活动能增加就业机会"
+                    },
+                    { 
+                        text: "准备毕业答辩", 
+                        effect: { englishSkill: [2, 3] },
+                        feedback: "充分准备确保顺利毕业"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
+                    }
+                ]
+            },
+            'year4-may': {
+                text: "毕业季高潮期，你需要为即将到来的新生活做最后准备。这是你大学生涯的终点，也是人生新篇章的起点。",
+                choices: [
+                    { 
+                        text: "参加毕业典礼和告别活动", 
+                        effect: { network: [2, 3] },
+                        feedback: "珍惜与同学老师的最后一段时光"
+                    },
+                    { 
+                        text: "整理大学期间的学习成果", 
+                        effect: { englishSkill: [1, 2], experience: [1, 2] },
+                        feedback: "总结经验为未来铺路"
+                    },
+                    { 
+                        text: "制定毕业后的行动计划", 
+                        effect: { experience: [2, 3] },
+                        feedback: "明确的计划有助于顺利过渡到职场"
                     },
                     { 
                         text: "休息一下，放松心情", 
@@ -1141,7 +1575,7 @@
             // 每年不超过3次事件，且不连续两个月触发
             if (gameState.eventsThisYear < 3 && 
                 gameState.lastEventMonth !== gameState.month &&
-                Math.random() > 0.8 && 
+                Math.random() > 0.7 && 
                 !gameState.eventOccurred) {
                 const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
                 document.getElementById('event-text').textContent = event.text;
@@ -1154,6 +1588,78 @@
                 return true;
             }
             return false;
+        }
+
+        // 更新成就显示
+        function updateAchievements() {
+            const container = document.getElementById('achievements-container');
+            container.innerHTML = '';
+            
+            achievements.forEach(ach => {
+                const achievementElement = document.createElement('div');
+                achievementElement.className = `achievement ${ach.unlocked ? 'unlocked' : ''}`;
+                achievementElement.innerHTML = `
+                    <i class="fas ${ach.icon}"></i>
+                    <div>
+                        <div class="achievement-name">${ach.name}</div>
+                        <div class="achievement-desc">${ach.description}</div>
+                    </div>
+                `;
+                container.appendChild(achievementElement);
+            });
+        }
+
+        // 检查并解锁成就
+        function checkAchievements() {
+            // 第一个选择
+            if (gameState.totalChoicesMade >= 1 && !gameState.achievements.includes('first_choice')) {
+                unlockAchievement('first_choice');
+            }
+            
+            // 技能达到50
+            if (gameState.englishSkill >= 50 && !gameState.achievements.includes('skill_50')) {
+                unlockAchievement('skill_50');
+            }
+            
+            // 人脉达到50
+            if (gameState.network >= 50 && !gameState.achievements.includes('network_50')) {
+                unlockAchievement('network_50');
+            }
+            
+            // 经验达到50
+            if (gameState.experience >= 50 && !gameState.achievements.includes('experience_50')) {
+                unlockAchievement('experience_50');
+            }
+            
+            // 休息5次
+            if (gameState.restCount >= 5 && !gameState.achievements.includes('rest_5')) {
+                unlockAchievement('rest_5');
+            }
+            
+            // 毕业
+            if (gameState.year === 4 && gameState.month === 5 && !gameState.achievements.includes('graduate')) {
+                unlockAchievement('graduate');
+            }
+        }
+
+        // 解锁成就
+        function unlockAchievement(id) {
+            const achievement = achievements.find(a => a.id === id);
+            if (achievement && !achievement.unlocked) {
+                achievement.unlocked = true;
+                gameState.achievements.push(id);
+                updateAchievements();
+                
+                // 显示解锁提示
+                const feedbackDisplay = document.getElementById('feedback-display');
+                feedbackDisplay.innerHTML = `<i class="fas fa-trophy"></i> 解锁成就：<strong>${achievement.name}</strong> - ${achievement.description}`;
+                feedbackDisplay.style.display = 'block';
+                
+                // 2秒后隐藏提示
+                setTimeout(() => {
+                    feedbackDisplay.style.display = 'none';
+                }, 2000);
+            }
         }
 
         // 进入下一个月
@@ -1190,8 +1696,11 @@
             // 触发随机事件
             showRandomEvent();
             
-            // 检查是否到达大四七月（游戏结束）
-            if (gameState.year === 4 && gameState.month === 7) {
+            // 检查成就
+            checkAchievements();
+            
+            // 检查是否到达大四五月（游戏结束）
+            if (gameState.year === 4 && gameState.month === 6) {
                 endGame('default');
                 return;
             }
@@ -1203,6 +1712,7 @@
         function updateDisplay() {
             updateTimeDisplay();
             updateStats();
+            updateAchievements();
             
             // 获取当前场景
             const sceneKey = getCurrentSceneKey();
@@ -1236,6 +1746,8 @@
                                 choice: choice.text
                             });
                             
+                            gameState.totalChoicesMade++;
+                            
                             // 如果是休息选项，增加计数
                             if (choice.text.includes("休息")) {
                                 gameState.restCount++;
@@ -1256,7 +1768,7 @@
                             buttons.forEach(btn => btn.disabled = true);
                             
                             // 如果是毕业选择
-                            if (sceneKey === 'year4-may' && index < 7) {
+                            if (sceneKey === 'year4-march' && index < 7) {
                                 const careers = ['研究生', '外企员工', '教师', '翻译', '创业者', '媒体从业者'];
                                 setTimeout(() => {
                                     if (index < 6) {
@@ -1303,43 +1815,10 @@
             
             document.getElementById('restart-btn').style.display = 'block';
             document.getElementById('choices-container').style.display = 'none';
+            
+            // 解锁毕业成就
+            unlockAchievement('graduate');
         }
 
         // 重新开始游戏
-        function restartGame() {
-            gameState.year = 1;
-            gameState.month = 9;
-            gameState.englishSkill = 20;
-            gameState.experience = 20;
-            gameState.network = 20;
-            gameState.mentalHealth = 100;
-            gameState.currentScene = 'start';
-            gameState.gameOver = false;
-            gameState.eventOccurred = false;
-            gameState.feedbackGiven = false;
-            gameState.monthsPassed = 0;
-            gameState.welcomeShown = false;
-            gameState.eventsThisYear = 0;
-            gameState.lastEventMonth = -1;
-            gameState.choicesHistory = [];
-            gameState.restCount = 0;
-            
-            document.getElementById('career-result').style.display = 'none';
-            document.getElementById('diagnosis-report').style.display = 'none';
-            document.getElementById('restart-btn').style.display = 'none';
-            document.getElementById('choices-container').style.display = 'grid';
-            document.getElementById('event-display').style.display = 'none';
-            document.getElementById('feedback-display').style.display = 'none';
-            
-            updateDisplay();
-        }
-
-        // 初始化游戏
-        document.addEventListener('DOMContentLoaded', () => {
-            updateDisplay();
-            document.getElementById('restart-btn').addEventListener('click', restartGame);
-            document.getElementById('restart-btn').style.display = 'none';
-        });
-    </script>
-</body>
-</html>
+        func
