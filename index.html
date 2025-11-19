@@ -1,717 +1,701 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语专业学生模拟器</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #ff6b6b;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ffd166;
+            margin-bottom: 15px;
+        }
+        
+        .game-container {
+            padding: 20px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4ecdc4;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #ffd166;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #1a936f);
+            border-radius: 5px;
+        }
+        
+        .time-display {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .month-year {
+            font-size: 1.5rem;
+            color: #ffd166;
+            margin-bottom: 5px;
+        }
+        
+        .event-display {
+            background: rgba(255, 200, 0, 0.2);
+            border-left: 4px solid #ffd166;
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .story-text {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 150px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .choice-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ff8e53, #ff6b6b);
+        }
+        
+        .choice-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .career-path {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .career-title {
+            font-size: 1.8rem;
+            color: #ffd166;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .career-description {
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        .restart-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background: linear-gradient(45deg, #1a936f, #4ecdc4);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .restart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        }
+        
+        .next-month-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background: linear-gradient(45deg, #45b7d1, #96c93d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .next-month-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(69, 183, 209, 0.5);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 600px) {
+            .choices {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="zh-CN"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;英语专业学生模拟器 - 增强版&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>* {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #fff;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>min-height: 100vh;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(0, 0, 0, 0.7);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(10px);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>header {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(0, 0, 0, 0.4);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 2px solid #ff6b6b;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2.5rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #4ecdc4;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.subtitle {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.2rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd166;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.game-container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.stats {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.stat-card {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.stat-value {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.8rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #4ecdc4;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 10px 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.stat-label {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd166;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.progress-bar {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.progress-fill {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(90deg, #4ecdc4, #1a936f);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.time-display {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.month-year {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.5rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd166;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.event-display {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 200, 0, 0.2);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-left: 4px solid #ffd166;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0 10px 10px 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.story-text {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>min-height: 150px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-left: 4px solid #ff6b6b;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.choices {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.choice-btn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(45deg, #ff6b6b, #ff8e53);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: left;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.choice-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-3px);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(45deg, #ff8e53, #ff6b6b);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.choice-btn:active {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(1px);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.career-path {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.career-title {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.8rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd166;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.career-description {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.7;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.1rem;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.restart-btn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 200px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px auto;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(45deg, #1a936f, #4ecdc4);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.restart-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(1.05);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.next-month-btn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 200px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px auto;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(45deg, #45b7d1, #96c93d);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.next-month-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(1.05);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 15px rgba(69, 183, 209, 0.5);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>footer {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #aaa;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.9rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-top: 1px solid rgba(255, 255, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 600px) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.choices {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>grid-template-columns: 1fr;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>h1 {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>font-size: 2rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>.subtitle {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>font-size: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>.stats {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>grid-template-columns: 1fr 1fr;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;英语专业学生模拟器&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="subtitle"&gt;增强版 - 按月规划你的大学生涯&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="game-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="time-display"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="month-year" id="month-year"&gt;大一 | 九月&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="stats"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="stat-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-label"&gt;英语技能&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-value" id="skill-value"&gt;50&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="progress-bar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="progress-fill" id="skill-progress" style="width: 50%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="stat-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-label"&gt;实践经验&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-value" id="experience-value"&gt;0&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="progress-bar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="progress-fill" id="experience-progress" style="width: 0%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="stat-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-label"&gt;人脉关系&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-value" id="network-value"&gt;20&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="progress-bar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="progress-fill" id="network-progress" style="width: 20%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="stat-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-label"&gt;财务状况&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="stat-value" id="finance-value"&gt;1000&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="progress-bar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="progress-fill" id="finance-progress" style="width: 50%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="event-display" id="event-display"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;strong&gt;随机事件：&lt;/strong&gt;&lt;span id="event-text"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="story-text" id="story-text"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>欢迎来到英语专业学生模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。</p>
-<p class="p1"><span class="Apple-converted-space">                </span>作为一名英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。</p>
-<p class="p1"><span class="Apple-converted-space">                </span>让我们开始你的大学生活吧！</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="choices" id="choices-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- 选择按钮将通过JavaScript动态生成 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="next-month-btn" id="next-month-btn"&gt;进入下个月 →&lt;/button&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="career-path" id="career-result"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="career-title" id="career-title"&gt;你的职业道路&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="career-description" id="career-description"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="restart-btn" id="restart-btn"&gt;重新开始游戏&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;footer&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;英语专业学生模拟器 - 帮助你规划未来职业道路 | 按月细化版本&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/footer&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 游戏状态</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const gameState = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>year: 1,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>month: 9, // 9月开学</p>
-<p class="p1"><span class="Apple-converted-space">            </span>englishSkill: 50,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>experience: 0,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>network: 20,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>finance: 1000,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>currentScene: 'start',</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameOver: false,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>eventOccurred: false,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>monthsPassed: 0</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 月份映射</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const months = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>9: '九月', 10: '十月', 11: '十一月', 12: '十二月',</p>
-<p class="p1"><span class="Apple-converted-space">            </span>1: '一月', 2: '二月', 3: '三月', 4: '四月',</p>
-<p class="p1"><span class="Apple-converted-space">            </span>5: '五月', 6: '六月', 7: '七月', 8: '八月'</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 学年映射</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const years = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>1: '大一', 2: '大二', 3: '大三', 4: '大四'</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 随机事件</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const randomEvents = [</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你参加的英语演讲比赛获得了一等奖！这大大提升了你的自信心和表达能力。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { englishSkill: 10, network: 5 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "图书馆举办免费的雅思培训课程，你报名参加了并取得了很大进步。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { englishSkill: 8 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "室友介绍你认识了一位在外企工作的学长，你们成了朋友。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { network: 10 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你意外发现了一个校内兼职机会，既能赚取生活费又能积累经验。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { experience: 7, finance: 500 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你生病了，需要请假休息一周，错过了重要的课程。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { englishSkill: -5 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你参加的志愿者活动得到了媒体报道，提升了你的社会影响力。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { network: 8, experience: 5 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你在网上发表的英语学习心得被大量转发，建立了个人品牌。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { network: 12 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你花了很多钱购买昂贵的学习资料，财务状况紧张。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { finance: -300 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你帮助同学完成了一个重要项目，获得了大家的认可。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { network: 6, experience: 4 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "你参加的社团活动让你结识了志同道合的朋友。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>effect: { network: 8 }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 场景定义</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const scenes = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>start: {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "欢迎来到英语专业学生模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。让我们开始你的大学生活吧！",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "专注于提高英语技能", effect: { englishSkill: 5 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "积极参与社团活动", effect: { network: 5 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "寻找兼职机会积累经验", effect: { experience: 5, finance: 200 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 大一各月场景</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year1-september': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "新学期开始了！你需要选修一些基础课程，同时也要考虑如何安排课余时间。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "报名参加英语角活动", effect: { englishSkill: 3, network: 2 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "加入学生会锻炼组织能力", effect: { network: 4, experience: 2 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "制定详细的学习计划", effect: { englishSkill: 4 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year1-october': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "期中考试临近，你需要平衡学习和其他活动的时间分配。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "集中精力复习备考", effect: { englishSkill: 6 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "参加期中前的学术讲座", effect: { englishSkill: 3, network: 2 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "与同学组成学习小组", effect: { network: 3, englishSkill: 4 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year1-november': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "学校举办文化节，有很多展示英语才能的机会。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "参与英语话剧表演", effect: { englishSkill: 5, experience: 3 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "组织英语歌曲比赛", effect: { network: 6, experience: 4 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "担任文化节志愿者", effect: { experience: 5, network: 3 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year1-december': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "期末考试周到了，你需要全力以赴应对各科考试。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "制定详细的复习计划", effect: { englishSkill: 7 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "与学霸同学一起复习", effect: { englishSkill: 5, network: 2 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "参加老师举办的答疑课", effect: { englishSkill: 6 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year1-january': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "寒假开始了，你可以利用这段时间充实自己。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "报名参加海外游学项目", effect: { englishSkill: 8, experience: 5, finance: -800 }, condition: () =&gt; gameState.finance &gt;= 800 },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "找一份与专业相关的实习", effect: { experience: 7, finance: 600 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "在家自学准备英语等级考试", effect: { englishSkill: 6 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year1-february': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "新学期即将开始，回顾寒假收获，为新学期做准备。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "分享寒假经历给同学们", effect: { network: 4, experience: 3 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "制定新学期目标计划", effect: { englishSkill: 3 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "提前预习新课程内容", effect: { englishSkill: 5 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 大二场景示例</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year2-march': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "进入大二下学期，专业课程更加深入。你开始思考未来的方向。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "深入学习语言学和文学理论", effect: { englishSkill: 7 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "加入学生会或英语协会担任职务", effect: { network: 6, experience: 3 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "申请暑期实习机会", effect: { experience: 5 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 大三场景示例</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year3-september': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "大三了！专业课程更加专业化，你需要为未来做更明确的规划。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "准备考研，提升学术能力", effect: { englishSkill: 8 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "参加国际交流项目，拓展视野", effect: { network: 7, experience: 5 } },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "专注于实习，积累工作经验", effect: { experience: 8 } }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 大四场景示例</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'year4-may': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>text: "毕业季来临，你需要为毕业后的生活做最终决定。",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "申请研究生院继续深造", condition: () =&gt; gameState.englishSkill &gt;= 80 },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "申请外企工作", condition: () =&gt; gameState.englishSkill &gt;= 70 &amp;&amp; gameState.experience &gt;= 30 },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "从事教育行业", condition: () =&gt; gameState.englishSkill &gt;= 60 },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "进入翻译公司工作", condition: () =&gt; gameState.englishSkill &gt;= 85 },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "自主创业", condition: () =&gt; gameState.network &gt;= 50 &amp;&amp; gameState.experience &gt;= 40 },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ text: "从事媒体/出版行业", condition: () =&gt; gameState.englishSkill &gt;= 65 &amp;&amp; gameState.experience &gt;= 25 }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>]</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 职业路径描述</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const careerPaths = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'研究生': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: "学术研究者",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: "你选择了继续深造的道路。凭借扎实的英语基础和学术能力，你成功考取了理想的研究生院。在未来几年里，你将深入研究语言学、文学或跨文化交际等领域。毕业后，你可以成为大学教授、研究员或在教育机构从事高级管理工作。你的学术训练将使你在知识传播和创新方面发挥重要作用。"</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'外企员工': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: "跨国企业精英",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: "凭借出色的英语能力和丰富的实习经验，你成功进入了一家知名跨国企业。你的职业道路可能从市场专员、人力资源助理或国际贸易专员开始，随着经验积累，逐步晋升为项目经理、部门主管甚至更高职位。你的语言优势将成为你在国际化职场中的核心竞争力，有机会参与全球项目和国际合作。"</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'教师': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: "教育工作者",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: "你选择了教育作为自己的终身事业。无论是成为中小学英语教师、培训机构讲师，还是高等教育领域的助教，你的专业知识和沟通能力都将发挥重要作用。随着教学经验的增长，你可以发展出独特的教学方法，甚至编写教材或成为教育顾问。你的工作将直接影响下一代的成长和发展。"</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'翻译': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: "专业译员",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: "凭借卓越的语言天赋和专业技能，你成为了一名专业译员。你可以在会议口译、商务谈判、文学翻译等不同领域发挥专长。优秀的翻译不仅需要扎实的语言功底，还需要广博的知识面和敏锐的文化洞察力。你的职业生涯将充满挑战与成就感，成为不同文化之间的桥梁。"</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'创业者': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: "创新企业家",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: "利用广泛的人脉网络和丰富的工作经验，你走上了创业之路。可能是创办语言培训学校、翻译服务公司，或是开发英语学习相关的科技产品。创业虽然充满风险，但你的语言优势和跨文化理解能力将成为独特的核心竞争力。你的创新精神和社会责任感将推动事业发展。"</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'媒体从业者': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: "文化传播者",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: "你进入了媒体和出版行业，成为一名编辑、记者或内容创作者。你的英语专业背景使你能处理国际新闻、引进国外优秀作品，或者为跨国企业提供内容服务。在这个信息时代，你的语言能力和文化敏感性将帮助你在这个领域脱颖而出，成为文化交流的重要推动者。"</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>'default': {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: "多元化发展者",</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: "虽然没有明确走向某一条特定道路，但你在大学期间全面发展，积累了多方面的技能和经验。这种多元化背景为你打开了多种可能性的大门。你可能会在不同领域间切换，或者找到一个能综合运用你各项能力的独特职位。人生本就充满变数，保持开放的心态将带你走向更广阔的天地。"</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 获取当前场景键</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function getCurrentSceneKey() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return `year${gameState.year}-${months[gameState.month].toLowerCase()}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 更新时间显示</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function updateTimeDisplay() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('month-year').textContent =<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>`${years[gameState.year]} | ${months[gameState.month]}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 更新属性显示</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function updateStats() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('skill-value').textContent = gameState.englishSkill;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('experience-value').textContent = gameState.experience;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('network-value').textContent = gameState.network;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('finance-value').textContent = gameState.finance;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 更新进度条</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('skill-progress').style.width = `${Math.min(100, Math.max(0, gameState.englishSkill))}%`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('experience-progress').style.width = `${Math.min(100, Math.max(0, gameState.experience))}%`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('network-progress').style.width = `${Math.min(100, Math.max(0, gameState.network))}%`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('finance-progress').style.width = `${Math.min(100, Math.max(0, gameState.finance / 20))}%`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 应用效果</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function applyEffect(effect) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (effect.englishSkill) gameState.englishSkill += effect.englishSkill;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (effect.experience) gameState.experience += effect.experience;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (effect.network) gameState.network += effect.network;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (effect.finance) gameState.finance += effect.finance;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 确保属性不为负数</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.englishSkill = Math.max(0, gameState.englishSkill);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.experience = Math.max(0, gameState.experience);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.network = Math.max(0, gameState.network);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.finance = Math.max(0, gameState.finance);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 显示随机事件</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function showRandomEvent() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (Math.random() &gt; 0.7 &amp;&amp; !gameState.eventOccurred) { // 30%概率触发事件</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('event-text').textContent = event.text;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('event-display').style.display = 'block';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>applyEffect(event.effect);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameState.eventOccurred = true;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>updateStats();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>return true;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return false;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 更新显示</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function updateDisplay() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>updateTimeDisplay();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>updateStats();</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 获取当前场景</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const sceneKey = getCurrentSceneKey();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const scene = scenes[sceneKey] || scenes[gameState.currentScene];</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 显示场景文本</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('story-text').textContent = scene.text;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 生成选择按钮</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const choicesContainer = document.getElementById('choices-container');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>choicesContainer.innerHTML = '';</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (scene.choices) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>scene.choices.forEach((choice, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>// 检查条件（如果有的话）</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (!choice.condition || choice.condition()) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>const button = document.createElement('button');</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>button.className = 'choice-btn';</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>button.textContent = choice.text;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>button.onclick = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>// 应用选择效果</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>if (choice.effect) {</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>applyEffect(choice.effect);</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">                            </span></p>
-<p class="p1"><span class="Apple-converted-space">                            </span>// 如果是毕业选择</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>if (sceneKey === 'year4-may' &amp;&amp; index &lt; 6) {</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>const careers = ['研究生', '外企员工', '教师', '翻译', '创业者', '媒体从业者'];</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>endGame(careers[index])();</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">                            </span></p>
-<p class="p1"><span class="Apple-converted-space">                            </span>// 隐藏事件显示</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>document.getElementById('event-display').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>gameState.eventOccurred = false;</p>
-<p class="p2"><span class="Apple-converted-space">                            </span></p>
-<p class="p1"><span class="Apple-converted-space">                            </span>updateStats();</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>};</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>choicesContainer.appendChild(button);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 如果是毕业月，显示毕业选择</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (sceneKey === 'year4-may') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('next-month-btn').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('next-month-btn').style.display = 'block';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 进入下一个月</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function nextMonth() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 隐藏事件显示</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('event-display').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.eventOccurred = false;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.month++;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.monthsPassed++;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 处理学年过渡</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.month &gt; 12) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameState.month = 1;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameState.year++;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 特殊月份处理</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.month === 9 &amp;&amp; gameState.year &gt; 1) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// 新学年开始，重置事件标记</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameState.eventOccurred = false;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 每过几个月自动增加一些属性</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.monthsPassed % 3 === 0) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameState.englishSkill += 2;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameState.network += 1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 触发随机事件</p>
-<p class="p1"><span class="Apple-converted-space">            </span>showRandomEvent();</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>updateDisplay();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 结束游戏</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function endGame(career) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return function() {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameState.gameOver = true;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const careerInfo = careerPaths[career] || careerPaths['default'];</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('career-title').textContent = careerInfo.title;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('career-description').textContent = careerInfo.description;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('career-result').style.display = 'block';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('restart-btn').style.display = 'block';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('choices-container').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('next-month-btn').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>};</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 重新开始游戏</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function restartGame() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.year = 1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.month = 9;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.englishSkill = 50;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.experience = 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.network = 20;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.finance = 1000;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.currentScene = 'start';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.gameOver = false;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.eventOccurred = false;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gameState.monthsPassed = 0;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('career-result').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('restart-btn').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('choices-container').style.display = 'grid';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('next-month-btn').style.display = 'block';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('event-display').style.display = 'none';</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>updateDisplay();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 初始化游戏</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>updateDisplay();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('next-month-btn').addEventListener('click', nextMonth);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('restart-btn').addEventListener('click', restartGame);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('restart-btn').style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+    <div class="container">
+        <header>
+            <h1>英语专业学生模拟器</h1>
+            <p class="subtitle">增强版 - 按月规划你的大学生涯</p>
+        </header>
+        
+        <div class="game-container">
+            <div class="time-display">
+                <div class="month-year" id="month-year">大一 | 九月</div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">英语技能</div>
+                    <div class="stat-value" id="skill-value">50</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skill-progress" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">实践经验</div>
+                    <div class="stat-value" id="experience-value">0</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="experience-progress" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">人脉关系</div>
+                    <div class="stat-value" id="network-value">20</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="network-progress" style="width: 20%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">财务状况</div>
+                    <div class="stat-value" id="finance-value">1000</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="finance-progress" style="width: 50%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="event-display" id="event-display">
+                <strong>随机事件：</strong><span id="event-text"></span>
+            </div>
+            
+            <div class="story-text" id="story-text">
+                欢迎来到英语专业学生模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。
+                作为一名英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。
+                让我们开始你的大学生活吧！
+            </div>
+            
+            <div class="choices" id="choices-container">
+                <!-- 选择按钮将通过JavaScript动态生成 -->
+            </div>
+            
+            <button class="next-month-btn" id="next-month-btn">进入下个月 →</button>
+            
+            <div class="career-path" id="career-result">
+                <h2 class="career-title" id="career-title">你的职业道路</h2>
+                <div class="career-description" id="career-description"></div>
+            </div>
+            
+            <button class="restart-btn" id="restart-btn">重新开始游戏</button>
+        </div>
+        
+        <footer>
+            <p>英语专业学生模拟器 - 帮助你规划未来职业道路 | 按月细化版本</p>
+        </footer>
+    </div>
+
+    <script>
+        // 游戏状态
+        const gameState = {
+            year: 1,
+            month: 9, // 9月开学
+            englishSkill: 50,
+            experience: 0,
+            network: 20,
+            finance: 1000,
+            currentScene: 'start',
+            gameOver: false,
+            eventOccurred: false,
+            monthsPassed: 0
+        };
+
+        // 月份映射
+        const months = {
+            9: '九月', 10: '十月', 11: '十一月', 12: '十二月',
+            1: '一月', 2: '二月', 3: '三月', 4: '四月',
+            5: '五月', 6: '六月', 7: '七月', 8: '八月'
+        };
+
+        // 学年映射
+        const years = {
+            1: '大一', 2: '大二', 3: '大三', 4: '大四'
+        };
+
+        // 随机事件
+        const randomEvents = [
+            {
+                text: "你参加的英语演讲比赛获得了一等奖！这大大提升了你的自信心和表达能力。",
+                effect: { englishSkill: 10, network: 5 }
+            },
+            {
+                text: "图书馆举办免费的雅思培训课程，你报名参加了并取得了很大进步。",
+                effect: { englishSkill: 8 }
+            },
+            {
+                text: "室友介绍你认识了一位在外企工作的学长，你们成了朋友。",
+                effect: { network: 10 }
+            },
+            {
+                text: "你意外发现了一个校内兼职机会，既能赚取生活费又能积累经验。",
+                effect: { experience: 7, finance: 500 }
+            },
+            {
+                text: "你生病了，需要请假休息一周，错过了重要的课程。",
+                effect: { englishSkill: -5 }
+            },
+            {
+                text: "你参加的志愿者活动得到了媒体报道，提升了你的社会影响力。",
+                effect: { network: 8, experience: 5 }
+            },
+            {
+                text: "你在网上发表的英语学习心得被大量转发，建立了个人品牌。",
+                effect: { network: 12 }
+            },
+            {
+                text: "你花了很多钱购买昂贵的学习资料，财务状况紧张。",
+                effect: { finance: -300 }
+            },
+            {
+                text: "你帮助同学完成了一个重要项目，获得了大家的认可。",
+                effect: { network: 6, experience: 4 }
+            },
+            {
+                text: "你参加的社团活动让你结识了志同道合的朋友。",
+                effect: { network: 8 }
+            }
+        ];
+
+        // 场景定义
+        const scenes = {
+            start: {
+                text: "欢迎来到英语专业学生模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。让我们开始你的大学生活吧！",
+                choices: [
+                    { text: "专注于提高英语技能", effect: { englishSkill: 5 } },
+                    { text: "积极参与社团活动", effect: { network: 5 } },
+                    { text: "寻找兼职机会积累经验", effect: { experience: 5, finance: 200 } }
+                ]
+            },
+            // 大一各月场景
+            'year1-september': {
+                text: "新学期开始了！你需要选修一些基础课程，同时也要考虑如何安排课余时间。",
+                choices: [
+                    { text: "报名参加英语角活动", effect: { englishSkill: 3, network: 2 } },
+                    { text: "加入学生会锻炼组织能力", effect: { network: 4, experience: 2 } },
+                    { text: "制定详细的学习计划", effect: { englishSkill: 4 } }
+                ]
+            },
+            'year1-october': {
+                text: "期中考试临近，你需要平衡学习和其他活动的时间分配。",
+                choices: [
+                    { text: "集中精力复习备考", effect: { englishSkill: 6 } },
+                    { text: "参加期中前的学术讲座", effect: { englishSkill: 3, network: 2 } },
+                    { text: "与同学组成学习小组", effect: { network: 3, englishSkill: 4 } }
+                ]
+            },
+            'year1-november': {
+                text: "学校举办文化节，有很多展示英语才能的机会。",
+                choices: [
+                    { text: "参与英语话剧表演", effect: { englishSkill: 5, experience: 3 } },
+                    { text: "组织英语歌曲比赛", effect: { network: 6, experience: 4 } },
+                    { text: "担任文化节志愿者", effect: { experience: 5, network: 3 } }
+                ]
+            },
+            'year1-december': {
+                text: "期末考试周到了，你需要全力以赴应对各科考试。",
+                choices: [
+                    { text: "制定详细的复习计划", effect: { englishSkill: 7 } },
+                    { text: "与学霸同学一起复习", effect: { englishSkill: 5, network: 2 } },
+                    { text: "参加老师举办的答疑课", effect: { englishSkill: 6 } }
+                ]
+            },
+            'year1-january': {
+                text: "寒假开始了，你可以利用这段时间充实自己。",
+                choices: [
+                    { text: "报名参加海外游学项目", effect: { englishSkill: 8, experience: 5, finance: -800 }, condition: () => gameState.finance >= 800 },
+                    { text: "找一份与专业相关的实习", effect: { experience: 7, finance: 600 } },
+                    { text: "在家自学准备英语等级考试", effect: { englishSkill: 6 } }
+                ]
+            },
+            'year1-february': {
+                text: "新学期即将开始，回顾寒假收获，为新学期做准备。",
+                choices: [
+                    { text: "分享寒假经历给同学们", effect: { network: 4, experience: 3 } },
+                    { text: "制定新学期目标计划", effect: { englishSkill: 3 } },
+                    { text: "提前预习新课程内容", effect: { englishSkill: 5 } }
+                ]
+            },
+            // 大二场景示例
+            'year2-march': {
+                text: "进入大二下学期，专业课程更加深入。你开始思考未来的方向。",
+                choices: [
+                    { text: "深入学习语言学和文学理论", effect: { englishSkill: 7 } },
+                    { text: "加入学生会或英语协会担任职务", effect: { network: 6, experience: 3 } },
+                    { text: "申请暑期实习机会", effect: { experience: 5 } }
+                ]
+            },
+            // 大三场景示例
+            'year3-september': {
+                text: "大三了！专业课程更加专业化，你需要为未来做更明确的规划。",
+                choices: [
+                    { text: "准备考研，提升学术能力", effect: { englishSkill: 8 } },
+                    { text: "参加国际交流项目，拓展视野", effect: { network: 7, experience: 5 } },
+                    { text: "专注于实习，积累工作经验", effect: { experience: 8 } }
+                ]
+            },
+            // 大四场景示例
+            'year4-may': {
+                text: "毕业季来临，你需要为毕业后的生活做最终决定。",
+                choices: [
+                    { text: "申请研究生院继续深造", condition: () => gameState.englishSkill >= 80 },
+                    { text: "申请外企工作", condition: () => gameState.englishSkill >= 70 && gameState.experience >= 30 },
+                    { text: "从事教育行业", condition: () => gameState.englishSkill >= 60 },
+                    { text: "进入翻译公司工作", condition: () => gameState.englishSkill >= 85 },
+                    { text: "自主创业", condition: () => gameState.network >= 50 && gameState.experience >= 40 },
+                    { text: "从事媒体/出版行业", condition: () => gameState.englishSkill >= 65 && gameState.experience >= 25 }
+                ]
+            }
+        };
+
+        // 职业路径描述
+        const careerPaths = {
+            '研究生': {
+                title: "学术研究者",
+                description: "你选择了继续深造的道路。凭借扎实的英语基础和学术能力，你成功考取了理想的研究生院。在未来几年里，你将深入研究语言学、文学或跨文化交际等领域。毕业后，你可以成为大学教授、研究员或在教育机构从事高级管理工作。你的学术训练将使你在知识传播和创新方面发挥重要作用。"
+            },
+            '外企员工': {
+                title: "跨国企业精英",
+                description: "凭借出色的英语能力和丰富的实习经验，你成功进入了一家知名跨国企业。你的职业道路可能从市场专员、人力资源助理或国际贸易专员开始，随着经验积累，逐步晋升为项目经理、部门主管甚至更高职位。你的语言优势将成为你在国际化职场中的核心竞争力，有机会参与全球项目和国际合作。"
+            },
+            '教师': {
+                title: "教育工作者",
+                description: "你选择了教育作为自己的终身事业。无论是成为中小学英语教师、培训机构讲师，还是高等教育领域的助教，你的专业知识和沟通能力都将发挥重要作用。随着教学经验的增长，你可以发展出独特的教学方法，甚至编写教材或成为教育顾问。你的工作将直接影响下一代的成长和发展。"
+            },
+            '翻译': {
+                title: "专业译员",
+                description: "凭借卓越的语言天赋和专业技能，你成为了一名专业译员。你可以在会议口译、商务谈判、文学翻译等不同领域发挥专长。优秀的翻译不仅需要扎实的语言功底，还需要广博的知识面和敏锐的文化洞察力。你的职业生涯将充满挑战与成就感，成为不同文化之间的桥梁。"
+            },
+            '创业者': {
+                title: "创新企业家",
+                description: "利用广泛的人脉网络和丰富的工作经验，你走上了创业之路。可能是创办语言培训学校、翻译服务公司，或是开发英语学习相关的科技产品。创业虽然充满风险，但你的语言优势和跨文化理解能力将成为独特的核心竞争力。你的创新精神和社会责任感将推动事业发展。"
+            },
+            '媒体从业者': {
+                title: "文化传播者",
+                description: "你进入了媒体和出版行业，成为一名编辑、记者或内容创作者。你的英语专业背景使你能处理国际新闻、引进国外优秀作品，或者为跨国企业提供内容服务。在这个信息时代，你的语言能力和文化敏感性将帮助你在这个领域脱颖而出，成为文化交流的重要推动者。"
+            },
+            'default': {
+                title: "多元化发展者",
+                description: "虽然没有明确走向某一条特定道路，但你在大学期间全面发展，积累了多方面的技能和经验。这种多元化背景为你打开了多种可能性的大门。你可能会在不同领域间切换，或者找到一个能综合运用你各项能力的独特职位。人生本就充满变数，保持开放的心态将带你走向更广阔的天地。"
+            }
+        };
+
+        // 获取当前场景键
+        function getCurrentSceneKey() {
+            return `year${gameState.year}-${months[gameState.month].toLowerCase()}`;
+        }
+
+        // 更新时间显示
+        function updateTimeDisplay() {
+            document.getElementById('month-year').textContent = 
+                `${years[gameState.year]} | ${months[gameState.month]}`;
+        }
+
+        // 更新属性显示
+        function updateStats() {
+            document.getElementById('skill-value').textContent = gameState.englishSkill;
+            document.getElementById('experience-value').textContent = gameState.experience;
+            document.getElementById('network-value').textContent = gameState.network;
+            document.getElementById('finance-value').textContent = gameState.finance;
+            
+            // 更新进度条
+            document.getElementById('skill-progress').style.width = `${Math.min(100, Math.max(0, gameState.englishSkill))}%`;
+            document.getElementById('experience-progress').style.width = `${Math.min(100, Math.max(0, gameState.experience))}%`;
+            document.getElementById('network-progress').style.width = `${Math.min(100, Math.max(0, gameState.network))}%`;
+            document.getElementById('finance-progress').style.width = `${Math.min(100, Math.max(0, gameState.finance / 20))}%`;
+        }
+
+        // 应用效果
+        function applyEffect(effect) {
+            if (effect.englishSkill) gameState.englishSkill += effect.englishSkill;
+            if (effect.experience) gameState.experience += effect.experience;
+            if (effect.network) gameState.network += effect.network;
+            if (effect.finance) gameState.finance += effect.finance;
+            
+            // 确保属性不为负数
+            gameState.englishSkill = Math.max(0, gameState.englishSkill);
+            gameState.experience = Math.max(0, gameState.experience);
+            gameState.network = Math.max(0, gameState.network);
+            gameState.finance = Math.max(0, gameState.finance);
+        }
+
+        // 显示随机事件
+        function showRandomEvent() {
+            if (Math.random() > 0.7 && !gameState.eventOccurred) { // 30%概率触发事件
+                const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
+                document.getElementById('event-text').textContent = event.text;
+                document.getElementById('event-display').style.display = 'block';
+                applyEffect(event.effect);
+                gameState.eventOccurred = true;
+                updateStats();
+                return true;
+            }
+            return false;
+        }
+
+        // 更新显示
+        function updateDisplay() {
+            updateTimeDisplay();
+            updateStats();
+            
+            // 获取当前场景
+            const sceneKey = getCurrentSceneKey();
+            const scene = scenes[sceneKey] || scenes[gameState.currentScene];
+            
+            // 显示场景文本
+            document.getElementById('story-text').textContent = scene.text;
+            
+            // 生成选择按钮
+            const choicesContainer = document.getElementById('choices-container');
+            choicesContainer.innerHTML = '';
+            
+            if (scene.choices) {
+                scene.choices.forEach((choice, index) => {
+                    // 检查条件（如果有的话）
+                    if (!choice.condition || choice.condition()) {
+                        const button = document.createElement('button');
+                        button.className = 'choice-btn';
+                        button.textContent = choice.text;
+                        button.onclick = () => {
+                            // 应用选择效果
+                            if (choice.effect) {
+                                applyEffect(choice.effect);
+                            }
+                            
+                            // 如果是毕业选择
+                            if (sceneKey === 'year4-may' && index < 6) {
+                                const careers = ['研究生', '外企员工', '教师', '翻译', '创业者', '媒体从业者'];
+                                endGame(careers[index])();
+                                return;
+                            }
+                            
+                            // 隐藏事件显示
+                            document.getElementById('event-display').style.display = 'none';
+                            gameState.eventOccurred = false;
+                            
+                            updateStats();
+                        };
+                        choicesContainer.appendChild(button);
+                    }
+                });
+            }
+            
+            // 如果是毕业月，显示毕业选择
+            if (sceneKey === 'year4-may') {
+                document.getElementById('next-month-btn').style.display = 'none';
+            } else {
+                document.getElementById('next-month-btn').style.display = 'block';
+            }
+        }
+
+        // 进入下一个月
+        function nextMonth() {
+            // 隐藏事件显示
+            document.getElementById('event-display').style.display = 'none';
+            gameState.eventOccurred = false;
+            
+            gameState.month++;
+            gameState.monthsPassed++;
+            
+            // 处理学年过渡
+            if (gameState.month > 12) {
+                gameState.month = 1;
+                gameState.year++;
+            }
+            
+            // 特殊月份处理
+            if (gameState.month === 9 && gameState.year > 1) {
+                // 新学年开始，重置事件标记
+                gameState.eventOccurred = false;
+            }
+            
+            // 每过几个月自动增加一些属性
+            if (gameState.monthsPassed % 3 === 0) {
+                gameState.englishSkill += 2;
+                gameState.network += 1;
+            }
+            
+            // 触发随机事件
+            showRandomEvent();
+            
+            updateDisplay();
+        }
+
+        // 结束游戏
+        function endGame(career) {
+            return function() {
+                gameState.gameOver = true;
+                const careerInfo = careerPaths[career] || careerPaths['default'];
+                
+                document.getElementById('career-title').textContent = careerInfo.title;
+                document.getElementById('career-description').textContent = careerInfo.description;
+                document.getElementById('career-result').style.display = 'block';
+                document.getElementById('restart-btn').style.display = 'block';
+                document.getElementById('choices-container').style.display = 'none';
+                document.getElementById('next-month-btn').style.display = 'none';
+            };
+        }
+
+        // 重新开始游戏
+        function restartGame() {
+            gameState.year = 1;
+            gameState.month = 9;
+            gameState.englishSkill = 50;
+            gameState.experience = 0;
+            gameState.network = 20;
+            gameState.finance = 1000;
+            gameState.currentScene = 'start';
+            gameState.gameOver = false;
+            gameState.eventOccurred = false;
+            gameState.monthsPassed = 0;
+            
+            document.getElementById('career-result').style.display = 'none';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('choices-container').style.display = 'grid';
+            document.getElementById('next-month-btn').style.display = 'block';
+            document.getElementById('event-display').style.display = 'none';
+            
+            updateDisplay();
+        }
+
+        // 初始化游戏
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDisplay();
+            document.getElementById('next-month-btn').addEventListener('click', nextMonth);
+            document.getElementById('restart-btn').addEventListener('click', restartGame);
+            document.getElementById('restart-btn').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
