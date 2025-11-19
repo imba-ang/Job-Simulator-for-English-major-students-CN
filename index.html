@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>英语专业学生模拟器</title>
+    <title>英语专业大学生就业模拟器</title>
     <style>
         * {
             box-sizing: border-box;
@@ -266,8 +266,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>英语专业学生模拟器</h1>
-            <p class="subtitle">按月规划你的大学生涯</p>
+            <h1>英语专业大学生就业模拟器</h1>
+            <p class="subtitle">为你的未来职业做好准备</p>
         </header>
         
         <div class="game-container">
@@ -307,17 +307,15 @@
             </div>
             
             <div class="event-display" id="event-display">
-                <strong>随机事件：</strong><span id="event-text"></span>
+                <span id="event-text"></span>
             </div>
             
             <div class="feedback-display" id="feedback-display">
-                <strong>选择反馈：</strong><span id="feedback-text"></span>
+                <span id="feedback-text"></span>
             </div>
             
             <div class="story-text" id="story-text">
-                欢迎来到英语专业学生模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。
-                作为一名英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。
-                让我们开始你的大学生活吧！
+                欢迎来到英语专业大学生就业模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名西南财经大学外国语学院英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。现在开始你的大学生活吧！
             </div>
             
             <div class="choices" id="choices-container">
@@ -338,7 +336,7 @@
         </div>
         
         <footer>
-            <p>英语专业学生模拟器 - 帮助你规划未来职业道路</p>
+            <p>英语专业大学生就业模拟器 - 帮助你规划未来职业道路</p>
         </footer>
     </div>
 
@@ -355,7 +353,8 @@
             gameOver: false,
             eventOccurred: false,
             feedbackGiven: false,
-            monthsPassed: 0
+            monthsPassed: 0,
+            welcomeShown: false
         };
 
         // 月份映射
@@ -474,7 +473,7 @@
         // 场景定义
         const scenes = {
             start: {
-                text: "欢迎来到英语专业学生模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。让我们开始你的大学生活吧！",
+                text: "",
                 choices: [
                     { 
                         text: "专注于提高英语专业技能", 
@@ -487,7 +486,7 @@
                         feedback: "拓展人际关系网对未来发展非常重要，你正在建立宝贵的社交资源。"
                     },
                     { 
-                        text: "寻找兼职机会积累实践经验", 
+                        text: "寻找兼职机会积累社会实践经验", 
                         effect: { experience: 5, finance: 200 },
                         feedback: "实践经验能让你更好地了解职场需求，同时增加收入改善财务状况。"
                     }
@@ -837,23 +836,31 @@
             }
             
             // 检查属性是否过低
-            if (gameState.englishSkill < 0) {
+            if (gameState.englishSkill < -10) {
                 endGameWithBadEnding("由于长期忽视专业学习，你的英语技能严重退化，无法满足毕业要求。");
                 return true;
             }
             
-            if (gameState.experience < -20) {
+            if (gameState.experience < -30) {
                 endGameWithBadEnding("缺乏实践经验让你在求职时屡屡碰壁，最终只能选择与专业无关的工作。");
                 return true;
             }
             
-            if (gameState.network < -10) {
+            if (gameState.network < -20) {
                 endGameWithBadEnding("人际关系的疏远让你错失了许多发展机会，事业发展受限。");
                 return true;
             }
             
-            if (gameState.finance < -2000) {
+            if (gameState.finance < -3000) {
                 endGameWithBadEnding("严重的财务危机迫使你不得不辍学打工，放弃了原本的学业规划。");
+                return true;
+            }
+            
+            // 降低全面崩溃的概率
+            if (Math.random() < 0.02 && 
+                (gameState.englishSkill < 10 || gameState.experience < -10 || 
+                 gameState.network < 0 || gameState.finance < -1000)) {
+                endGameWithBadEnding("由于各项能力指标严重不足，你发现自己无法应对大学生活的挑战。");
                 return true;
             }
             
@@ -862,7 +869,7 @@
 
         // 显示随机事件
         function showRandomEvent() {
-            if (Math.random() > 0.7 && !gameState.eventOccurred) { // 30%概率触发事件
+            if (Math.random() > 0.8 && !gameState.eventOccurred) { // 降低到20%概率触发事件
                 const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
                 document.getElementById('event-text').textContent = event.text;
                 document.getElementById('event-display').style.display = 'block';
@@ -889,8 +896,10 @@
             gameState.eventOccurred = false;
             gameState.feedbackGiven = false;
             
-            // 每月自动增加财务状况
+            // 每月自动增加财务状况和扣除生活费
             gameState.finance += 1000;
+            const livingCost = Math.floor(Math.random() * 1001) + 600; // 600-1600之间
+            gameState.finance -= livingCost;
             
             gameState.month++;
             gameState.monthsPassed++;
@@ -937,8 +946,14 @@
             const sceneKey = getCurrentSceneKey();
             const scene = scenes[sceneKey] || scenes[gameState.currentScene];
             
-            // 显示场景文本
-            document.getElementById('story-text').textContent = scene.text;
+            // 显示场景文本（欢迎语只在开始时显示一次）
+            if (gameState.currentScene === 'start' && !gameState.welcomeShown) {
+                document.getElementById('story-text').textContent = 
+                    "欢迎来到英语专业大学生就业模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名西南财经大学外国语学院英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。现在开始你的大学生活吧！";
+                gameState.welcomeShown = true;
+            } else {
+                document.getElementById('story-text').textContent = scene.text;
+            }
             
             // 生成选择按钮
             const choicesContainer = document.getElementById('choices-container');
@@ -1035,6 +1050,7 @@
             gameState.eventOccurred = false;
             gameState.feedbackGiven = false;
             gameState.monthsPassed = 0;
+            gameState.welcomeShown = false;
             
             document.getElementById('career-result').style.display = 'none';
             document.getElementById('bad-ending').style.display = 'none';
