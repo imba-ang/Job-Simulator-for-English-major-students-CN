@@ -120,8 +120,6 @@
             border-radius: 0 8px 8px 0;
             margin: 15px 0;
             display: none;
-            animation: shake 0.5s;
-            animation-iteration-count: 3;
         }
         
         .feedback-display {
@@ -182,6 +180,35 @@
             color: #66fcf1;
         }
         
+        .rest-btn {
+            background: linear-gradient(45deg, #45b7d1, #96c93d);
+            color: #002333;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+        }
+        
+        .rest-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #96c93d, #45b7d1);
+        }
+        
+        .rest-btn:disabled {
+            background: #005a66;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            color: #66fcf1;
+        }
+        
         .career-path {
             background: rgba(0, 60, 70, 0.6);
             border-radius: 8px;
@@ -224,6 +251,31 @@
         .bad-ending-description {
             line-height: 1.6;
             font-size: 1rem;
+        }
+        
+        .diagnosis-report {
+            background: rgba(0, 60, 70, 0.6);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            border: 1px solid #00a8b5;
+        }
+        
+        .report-title {
+            font-size: 1.5rem;
+            color: #66fcf1;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .report-section {
+            margin-bottom: 15px;
+        }
+        
+        .report-section h3 {
+            color: #00e5ff;
+            margin-bottom: 8px;
         }
         
         .restart-btn {
@@ -310,7 +362,7 @@
                 font-size: 0.95rem;
             }
             
-            .career-title, .bad-ending-title {
+            .career-title, .bad-ending-title, .report-title {
                 font-size: 1.3rem;
             }
         }
@@ -371,16 +423,16 @@
             <div class="stats">
                 <div class="stat-card">
                     <div class="stat-label">英语专业技能</div>
-                    <div class="stat-value" id="skill-value">50</div>
+                    <div class="stat-value" id="skill-value">20</div>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="skill-progress" style="width: 50%"></div>
+                        <div class="progress-fill" id="skill-progress" style="width: 20%"></div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">社会实践经验</div>
-                    <div class="stat-value" id="experience-value">0</div>
+                    <div class="stat-value" id="experience-value">20</div>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="experience-progress" style="width: 0%"></div>
+                        <div class="progress-fill" id="experience-progress" style="width: 20%"></div>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -408,8 +460,10 @@
             </div>
             
             <div class="story-text" id="story-text">
-                欢迎来到英语专业大学生就业模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名西南财经大学外国语学院英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。现在开始你的大学生活吧！
+                欢迎来到英语专业大学生就业模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名<span style="font-weight: bold;">西南财经大学外国语学院</span>英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。现在开始你的大学生活吧！
             </div>
+            
+            <button class="rest-btn" id="rest-btn">修整（恢复心理健康）</button>
             
             <div class="choices" id="choices-container">
                 <!-- 选择按钮将通过JavaScript动态生成 -->
@@ -425,6 +479,11 @@
                 <div class="bad-ending-description" id="bad-ending-description"></div>
             </div>
             
+            <div class="diagnosis-report" id="diagnosis-report">
+                <h2 class="report-title">就业诊断报告</h2>
+                <div id="report-content"></div>
+            </div>
+            
             <button class="restart-btn" id="restart-btn">重新开始游戏</button>
         </div>
         
@@ -438,8 +497,8 @@
         const gameState = {
             year: 1,
             month: 9, // 9月开学
-            englishSkill: 50,
-            experience: 0,
+            englishSkill: 20,
+            experience: 20,
             network: 20,
             finance: 1000,
             currentScene: 'start',
@@ -448,7 +507,12 @@
             feedbackGiven: false,
             monthsPassed: 0,
             welcomeShown: false,
-            badEventTriggered: false // 用于跟踪是否触发了坏事件
+            badEventTriggered: false, // 用于跟踪是否触发了坏事件
+            eventsThisYear: 0, // 今年触发的事件数
+            lastEventMonth: -1, // 上次事件触发的月份
+            mentalHealth: 100, // 心理健康值
+            mentalHealthHistory: [], // 心理健康历史记录
+            choicesHistory: [] // 选择历史记录
         };
 
         // 月份映射
@@ -622,17 +686,17 @@
                 choices: [
                     { 
                         text: "专注于提高英语专业技能", 
-                        effect: { englishSkill: [1, 3] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "专注学习是打好基础的关键"
                     },
                     { 
                         text: "积极参与社团活动", 
-                        effect: { network: [1, 3] },
+                        effect: { network: [1, 2] },
                         feedback: "拓展人际关系网对未来发展非常重要"
                     },
                     { 
                         text: "寻找兼职机会积累社会实践经验", 
-                        effect: { experience: [1, 3], finance: [50, 150] },
+                        effect: { experience: [1, 2], finance: [50, 100] },
                         feedback: "实践经验能让你更好地了解职场需求"
                     }
                 ]
@@ -932,6 +996,16 @@
             }
         };
 
+        // 职业匹配度权重
+        const careerWeights = {
+            '研究生': { englishSkill: 0.5, experience: 0.2, network: 0.3 },
+            '外企员工': { englishSkill: 0.4, experience: 0.4, network: 0.2 },
+            '教师': { englishSkill: 0.6, experience: 0.3, network: 0.1 },
+            '翻译': { englishSkill: 0.7, experience: 0.2, network: 0.1 },
+            '创业者': { englishSkill: 0.2, experience: 0.4, network: 0.4 },
+            '媒体从业者': { englishSkill: 0.5, experience: 0.3, network: 0.2 }
+        };
+
         // 获取当前场景键
         function getCurrentSceneKey() {
             return `year${gameState.year}-${months[gameState.month].toLowerCase()}`;
@@ -1000,6 +1074,99 @@
             return changes;
         }
 
+        // 计算职业匹配度
+        function calculateMatchScore(career) {
+            const weights = careerWeights[career] || { englishSkill: 0.33, experience: 0.33, network: 0.34 };
+            let score = 0;
+            
+            score += gameState.englishSkill * weights.englishSkill;
+            score += gameState.experience * weights.experience;
+            score += gameState.network * weights.network;
+            
+            return Math.min(100, Math.round(score));
+        }
+
+        // 生成就业诊断报告
+        function generateDiagnosisReport(career) {
+            const weights = careerWeights[career] || { englishSkill: 0.33, experience: 0.33, network: 0.34 };
+            let report = '<div class="report-section">';
+            
+            // 优势分析
+            report += '<h3>优势分析</h3><ul>';
+            if (gameState.englishSkill >= 70) {
+                report += '<li>英语专业技能非常出色，具备扎实的语言基础</li>';
+            }
+            if (gameState.experience >= 40) {
+                report += '<li>拥有丰富的社会实践经验，实践能力强</li>';
+            }
+            if (gameState.network >= 50) {
+                report += '<li>人脉关系广泛，社交能力强</li>';
+            }
+            if (gameState.finance >= 3000) {
+                report += '<li>财务状况良好，有一定经济基础</li>';
+            }
+            report += '</ul></div>';
+            
+            // 短板分析
+            report += '<div class="report-section"><h3>短板分析</h3><ul>';
+            if (gameState.englishSkill < 40) {
+                report += '<li>英语专业技能有待提升，建议加强专业学习</li>';
+            }
+            if (gameState.experience < 20) {
+                report += '<li>社会实践经验不足，建议多参与实习和志愿活动</li>';
+            }
+            if (gameState.network < 30) {
+                report += '<li>人脉关系相对薄弱，建议多参与社交活动</li>';
+            }
+            report += '</ul></div>';
+            
+            // 职业建议
+            report += '<div class="report-section"><h3>职业建议</h3><ul>';
+            const matchScore = calculateMatchScore(career);
+            
+            if (matchScore >= 80) {
+                report += `<li>你与${careerPaths[career].title}岗位匹配度很高（${matchScore}%），非常适合此职业方向</li>`;
+            } else if (matchScore >= 60) {
+                report += `<li>你与${careerPaths[career].title}岗位匹配度较好（${matchScore}%），有一定竞争力</li>`;
+            } else {
+                report += `<li>你与${careerPaths[career].title}岗位匹配度一般（${matchScore}%），建议继续提升相关能力</li>`;
+            }
+            
+            // 起薪建议
+            let baseSalary = 0;
+            switch(career) {
+                case '研究生': baseSalary = 12; break;
+                case '外企员工': baseSalary = 18; break;
+                case '教师': baseSalary = 10; break;
+                case '翻译': baseSalary = 15; break;
+                case '创业者': baseSalary = 8; break;
+                case '媒体从业者': baseSalary = 12; break;
+                default: baseSalary = 8;
+            }
+            
+            const salaryAdjustment = (matchScore - 50) / 10;
+            const finalSalary = Math.max(6, baseSalary + salaryAdjustment);
+            report += `<li>建议起薪：年薪约${Math.round(finalSalary)}万元</li>`;
+            
+            report += '</ul></div>';
+            
+            // 发展建议
+            report += '<div class="report-section"><h3>发展建议</h3><ul>';
+            if (gameState.englishSkill < 60) {
+                report += '<li>继续加强英语专业技能学习，特别是听说读写综合能力</li>';
+            }
+            if (gameState.experience < 30) {
+                report += '<li>多参与实习、项目和志愿活动，积累实践经验</li>';
+            }
+            if (gameState.network < 40) {
+                report += '<li>积极参加行业活动和社交聚会，拓展人脉关系</li>';
+            }
+            report += '<li>保持终身学习的态度，不断提升自身综合素质</li>';
+            report += '</ul></div>';
+            
+            return report;
+        }
+
         // 检查坏结局
         function checkBadEnding() {
             // 检查是否触发特殊坏结局事件
@@ -1038,22 +1205,35 @@
 
         // 显示随机事件
         function showRandomEvent() {
-            if (Math.random() > 0.7 && !gameState.eventOccurred) { // 30%概率触发事件
+            // 每年不超过3次事件，且不连续两个月触发
+            if (gameState.eventsThisYear < 3 && 
+                gameState.lastEventMonth !== gameState.month &&
+                Math.random() > 0.8 && 
+                !gameState.eventOccurred) {
                 const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
                 document.getElementById('event-text').textContent = event.text;
                 document.getElementById('event-display').style.display = 'block';
                 applyEffect(event.effect);
                 gameState.eventOccurred = true;
-                
-                // 标记是否触发了坏事件
-                if (event.badEnding) {
-                    gameState.badEventTriggered = true;
-                }
-                
+                gameState.eventsThisYear++;
+                gameState.lastEventMonth = gameState.month;
                 updateStats();
                 return true;
             }
             return false;
+        }
+
+        // 修整功能
+        function rest() {
+            if (gameState.mentalHealth < 100) {
+                gameState.mentalHealth = Math.min(100, gameState.mentalHealth + 20);
+                document.getElementById('story-text').innerHTML = 
+                    "<strong>你进行了适当的休息和调整，心理健康状况有所改善（心理健康+20）</strong>";
+                document.getElementById('rest-btn').disabled = true;
+                setTimeout(() => {
+                    updateDisplay();
+                }, 2000);
+            }
         }
 
         // 进入下一个月
@@ -1068,6 +1248,9 @@
             const livingCost = Math.floor(Math.random() * 1001) + 600; // 600-1600之间
             gameState.finance -= livingCost;
             
+            // 每月心理健康轻微下降
+            gameState.mentalHealth = Math.max(0, gameState.mentalHealth - 2);
+            
             gameState.month++;
             gameState.monthsPassed++;
             
@@ -1075,6 +1258,7 @@
             if (gameState.month > 12) {
                 gameState.month = 1;
                 gameState.year++;
+                gameState.eventsThisYear = 0; // 重置年度事件计数
             }
             
             // 特殊月份处理
@@ -1115,12 +1299,15 @@
             
             // 显示场景文本（欢迎语只在开始时显示一次）
             if (gameState.currentScene === 'start' && !gameState.welcomeShown) {
-                document.getElementById('story-text').textContent = 
-                    "欢迎来到英语专业大学生就业模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名西南财经大学外国语学院英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。现在开始你的大学生活吧！";
+                document.getElementById('story-text').innerHTML = 
+                    "欢迎来到英语专业大学生就业模拟器！你刚刚踏入大学校园，面前是充满可能性的四年时光。作为一名<span style='font-weight: bold;'>西南财经大学外国语学院</span>英语专业的学生，你需要在学术、实践和人际关系之间找到平衡，为未来的职业生涯做好准备。现在开始你的大学生活吧！";
                 gameState.welcomeShown = true;
             } else {
                 document.getElementById('story-text').textContent = scene.text;
             }
+            
+            // 更新修整按钮状态
+            document.getElementById('rest-btn').disabled = (gameState.mentalHealth >= 100);
             
             // 生成选择按钮
             const choicesContainer = document.getElementById('choices-container');
@@ -1134,6 +1321,13 @@
                         button.className = 'choice-btn';
                         button.textContent = choice.text;
                         button.onclick = () => {
+                            // 记录选择
+                            gameState.choicesHistory.push({
+                                year: gameState.year,
+                                month: gameState.month,
+                                choice: choice.text
+                            });
+                            
                             // 应用选择效果
                             let changes = [];
                             if (choice.effect) {
@@ -1147,6 +1341,7 @@
                             // 禁用所有按钮
                             const buttons = choicesContainer.querySelectorAll('.choice-btn');
                             buttons.forEach(btn => btn.disabled = true);
+                            document.getElementById('rest-btn').disabled = true;
                             
                             // 如果是毕业选择
                             if (sceneKey === 'year4-may' && index < 6) {
@@ -1167,6 +1362,7 @@
             if (gameState.eventOccurred) {
                 const buttons = choicesContainer.querySelectorAll('.choice-btn');
                 buttons.forEach(btn => btn.disabled = true);
+                document.getElementById('rest-btn').disabled = true;
                 
                 // 2秒后自动进入下一个月
                 setTimeout(nextMonth, 2000);
@@ -1181,8 +1377,15 @@
             document.getElementById('career-title').textContent = careerInfo.title;
             document.getElementById('career-description').textContent = careerInfo.description;
             document.getElementById('career-result').style.display = 'block';
+            
+            // 生成诊断报告
+            const reportContent = generateDiagnosisReport(career);
+            document.getElementById('report-content').innerHTML = reportContent;
+            document.getElementById('diagnosis-report').style.display = 'block';
+            
             document.getElementById('restart-btn').style.display = 'block';
             document.getElementById('choices-container').style.display = 'none';
+            document.getElementById('rest-btn').style.display = 'none';
         }
 
         // 结束游戏（坏结局）
@@ -1197,16 +1400,19 @@
             document.getElementById('bad-ending-title').textContent = badEndingDesc.title;
             document.getElementById('bad-ending-description').textContent = reason + " " + badEndingDesc.description;
             document.getElementById('bad-ending').style.display = 'block';
+            document.getElementById('bad-ending').style.animation = 'shake 0.5s';
+            document.getElementById('bad-ending').style.animationIterationCount = '5';
             document.getElementById('restart-btn').style.display = 'block';
             document.getElementById('choices-container').style.display = 'none';
+            document.getElementById('rest-btn').style.display = 'none';
         }
 
         // 重新开始游戏
         function restartGame() {
             gameState.year = 1;
             gameState.month = 9;
-            gameState.englishSkill = 50;
-            gameState.experience = 0;
+            gameState.englishSkill = 20;
+            gameState.experience = 20;
             gameState.network = 20;
             gameState.finance = 1000;
             gameState.currentScene = 'start';
@@ -1216,13 +1422,20 @@
             gameState.monthsPassed = 0;
             gameState.welcomeShown = false;
             gameState.badEventTriggered = false;
+            gameState.eventsThisYear = 0;
+            gameState.lastEventMonth = -1;
+            gameState.mentalHealth = 100;
+            gameState.mentalHealthHistory = [];
+            gameState.choicesHistory = [];
             
             document.getElementById('career-result').style.display = 'none';
             document.getElementById('bad-ending').style.display = 'none';
+            document.getElementById('diagnosis-report').style.display = 'none';
             document.getElementById('restart-btn').style.display = 'none';
             document.getElementById('choices-container').style.display = 'grid';
             document.getElementById('event-display').style.display = 'none';
             document.getElementById('feedback-display').style.display = 'none';
+            document.getElementById('rest-btn').style.display = 'block';
             
             updateDisplay();
         }
@@ -1231,6 +1444,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateDisplay();
             document.getElementById('restart-btn').addEventListener('click', restartGame);
+            document.getElementById('rest-btn').addEventListener('click', rest);
             document.getElementById('restart-btn').style.display = 'none';
         });
     </script>
