@@ -16,7 +16,7 @@
             background: linear-gradient(135deg, #004d61, #007a8c, #004d61);
             color: #fff;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -35,80 +35,80 @@
         
         header {
             background: rgba(0, 40, 50, 0.7);
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             border-bottom: 2px solid #00a8b5;
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 8px;
             color: #00e5ff;
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #66fcf1;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .game-container {
-            padding: 20px;
+            padding: 15px;
         }
         
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
         
         .stat-card {
             background: rgba(0, 60, 70, 0.6);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 8px;
+            padding: 12px;
             text-align: center;
             border: 1px solid #00a8b5;
         }
         
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #00e5ff;
-            margin: 10px 0;
+            margin: 8px 0;
         }
         
         .stat-label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #66fcf1;
         }
         
         .progress-bar {
-            height: 10px;
+            height: 8px;
             background: rgba(0, 80, 100, 0.5);
-            border-radius: 5px;
-            margin-top: 5px;
+            border-radius: 4px;
+            margin-top: 4px;
             overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #00e5ff, #00a8b5);
-            border-radius: 5px;
+            border-radius: 4px;
         }
         
         .time-display {
             background: rgba(0, 60, 70, 0.6);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 8px;
+            padding: 12px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid #00a8b5;
         }
         
         .month-year {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #66fcf1;
             margin-bottom: 5px;
         }
@@ -116,55 +116,57 @@
         .event-display {
             background: rgba(255, 200, 0, 0.2);
             border-left: 4px solid #ffd166;
-            padding: 15px;
-            border-radius: 0 10px 10px 0;
-            margin: 20px 0;
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
             display: none;
+            animation: shake 0.5s;
+            animation-iteration-count: 3;
         }
         
         .feedback-display {
             background: rgba(0, 120, 150, 0.4);
             border-left: 4px solid #00e5ff;
-            padding: 15px;
-            border-radius: 0 10px 10px 0;
-            margin: 20px 0;
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
         }
         
         .story-text {
             background: rgba(0, 60, 70, 0.6);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            min-height: 150px;
-            font-size: 1.1rem;
-            line-height: 1.6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            min-height: 120px;
+            font-size: 1rem;
+            line-height: 1.5;
             border-left: 4px solid #00a8b5;
         }
         
         .choices {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
         }
         
         .choice-btn {
             background: linear-gradient(45deg, #00a8b5, #00e5ff);
             color: #002333;
             border: none;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
             text-align: left;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
             font-weight: bold;
         }
         
         .choice-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.3);
             background: linear-gradient(45deg, #00e5ff, #00a8b5);
         }
         
@@ -182,57 +184,59 @@
         
         .career-path {
             background: rgba(0, 60, 70, 0.6);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
             display: none;
             border: 1px solid #00a8b5;
         }
         
         .career-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #66fcf1;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-align: center;
         }
         
         .career-description {
-            line-height: 1.7;
-            font-size: 1.1rem;
+            line-height: 1.6;
+            font-size: 1rem;
         }
         
         .bad-ending {
             background: rgba(100, 0, 0, 0.4);
             border: 2px solid #ff4757;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
             display: none;
+            animation: shake 0.5s;
+            animation-iteration-count: 5;
         }
         
         .bad-ending-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #ff6b81;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-align: center;
         }
         
         .bad-ending-description {
-            line-height: 1.7;
-            font-size: 1.1rem;
+            line-height: 1.6;
+            font-size: 1rem;
         }
         
         .restart-btn {
             display: block;
-            width: 200px;
-            margin: 20px auto;
-            padding: 12px;
+            width: 180px;
+            margin: 15px auto;
+            padding: 10px;
             background: linear-gradient(45deg, #007a8c, #00e5ff);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
         
@@ -243,27 +247,111 @@
         
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             color: #66fcf1;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border-top: 1px solid rgba(0, 168, 181, 0.5);
         }
         
-        @media (max-width: 600px) {
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stat-card {
+                padding: 10px;
+            }
+            
+            .stat-value {
+                font-size: 1.3rem;
+            }
+            
+            .stat-label {
+                font-size: 0.8rem;
+            }
+            
             .choices {
                 grid-template-columns: 1fr;
             }
             
-            h1 {
-                font-size: 2rem;
+            .choice-btn {
+                padding: 10px;
+                font-size: 0.9rem;
             }
             
-            .subtitle {
-                font-size: 1rem;
+            .story-text {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+            
+            .career-title, .bad-ending-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .game-container {
+                padding: 10px;
             }
             
             .stats {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .stat-card {
+                padding: 8px;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+            }
+            
+            .choices {
+                gap: 10px;
+            }
+            
+            .choice-btn {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+            
+            footer {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -379,68 +467,123 @@
         const randomEvents = [
             {
                 text: "你参加的英语演讲比赛获得了一等奖！这大大提升了你的自信心和表达能力。",
-                effect: { englishSkill: [5, 15], network: [3, 8] },
+                effect: { englishSkill: [3, 6], network: [2, 4] },
                 badEnding: false
             },
             {
                 text: "图书馆举办免费的雅思培训课程，你报名参加了并取得了很大进步。",
-                effect: { englishSkill: [6, 12] },
+                effect: { englishSkill: [2, 5] },
                 badEnding: false
             },
             {
                 text: "室友介绍你认识了一位在外企工作的学长，你们成了朋友。",
-                effect: { network: [7, 13] },
+                effect: { network: [3, 6] },
                 badEnding: false
             },
             {
                 text: "你意外发现了一个校内兼职机会，既能赚取生活费又能积累经验。",
-                effect: { experience: [5, 10], finance: [300, 700] },
+                effect: { experience: [2, 4], finance: [200, 400] },
                 badEnding: false
             },
             {
                 text: "你生病了，需要请假休息一周，错过了重要的课程。",
-                effect: { englishSkill: [-8, -2] },
+                effect: { englishSkill: [-4, -1] },
                 badEnding: false
             },
             {
                 text: "你参加的志愿者活动得到了媒体报道，提升了你的社会影响力。",
-                effect: { network: [6, 12], experience: [3, 8] },
+                effect: { network: [3, 5], experience: [1, 3] },
                 badEnding: false
             },
             {
                 text: "你在网上发表的英语学习心得被大量转发，建立了个人品牌。",
-                effect: { network: [10, 15] },
+                effect: { network: [4, 7] },
                 badEnding: false
             },
             {
                 text: "你花了很多钱购买昂贵的学习资料，财务状况紧张。",
-                effect: { finance: [-500, -100] },
+                effect: { finance: [-300, -100] },
                 badEnding: false
             },
             {
                 text: "你帮助同学完成了一个重要项目，获得了大家的认可。",
-                effect: { network: [4, 9], experience: [2, 6] },
+                effect: { network: [2, 4], experience: [1, 2] },
                 badEnding: false
             },
             {
                 text: "你参加的社团活动让你结识了志同道合的朋友。",
-                effect: { network: [6, 11] },
+                effect: { network: [3, 5] },
                 badEnding: false
             },
             {
                 text: "由于过度劳累，你患上了严重的焦虑症，需要休学治疗。",
-                effect: { englishSkill: [-30, -15], experience: [-15, -5], network: [-20, -10] },
+                effect: { englishSkill: [-10, -5], experience: [-5, -2], network: [-8, -4] },
                 badEnding: true
             },
             {
                 text: "家庭经济困难，你不得不辍学打工维持生计。",
-                effect: { finance: [-1500, -800] },
+                effect: { finance: [-800, -400] },
                 badEnding: true
             },
             {
                 text: "因为作弊被学校开除，前途一片黯淡。",
-                effect: { englishSkill: [-40, -25], network: [-30, -15] },
+                effect: { englishSkill: [-15, -8], network: [-12, -6] },
                 badEnding: true
+            },
+            {
+                text: "你获得了国家奖学金，这不仅是经济上的帮助，更是对你学业的认可。",
+                effect: { finance: [800, 1200], englishSkill: [2, 4] },
+                badEnding: false
+            },
+            {
+                text: "你在一次小组作业中与同学发生争执，影响了人际关系。",
+                effect: { network: [-5, -2] },
+                badEnding: false
+            },
+            {
+                text: "你参加了一个英语角活动，但因为准备不充分而表现不佳。",
+                effect: { englishSkill: [-3, -1] },
+                badEnding: false
+            },
+            {
+                text: "你成功申请到了一个海外交流项目，这将大大提升你的国际视野。",
+                effect: { englishSkill: [5, 8], experience: [3, 5], network: [4, 6] },
+                badEnding: false
+            },
+            {
+                text: "你在一个知名企业实习期间表现出色，获得了实习证明和推荐信。",
+                effect: { experience: [4, 7], network: [3, 5] },
+                badEnding: false
+            },
+            {
+                text: "你因为一次考试作弊被发现，虽然没有被开除，但受到了严重警告。",
+                effect: { network: [-6, -3], englishSkill: [-4, -2] },
+                badEnding: false
+            },
+            {
+                text: "你参加了一个创业比赛，虽然没有获奖，但积累了宝贵的经验。",
+                effect: { experience: [2, 4], network: [1, 3] },
+                badEnding: false
+            },
+            {
+                text: "你因为长期熬夜学习导致身体不适，需要调整作息。",
+                effect: { englishSkill: [-2, 0] },
+                badEnding: false
+            },
+            {
+                text: "你在一个学术会议上发表了论文，提升了学术声誉。",
+                effect: { englishSkill: [4, 6], network: [3, 5] },
+                badEnding: false
+            },
+            {
+                text: "你因为一次意外受伤需要休养，影响了学习进度。",
+                effect: { englishSkill: [-3, -1], experience: [-2, 0] },
+                badEnding: false
+            },
+            {
+                text: "你参加了一个公益活动，获得了社会好评。",
+                effect: { network: [4, 6], experience: [2, 3] },
+                badEnding: false
             }
         ];
 
@@ -459,298 +602,298 @@
         // 坏结局描述
         const badEndings = [
             {
-                title: "健康危机",
-                description: "由于长期忽视身体健康，过度学习和工作压力导致你患上了严重的身心疾病。你不得不停止学业进行治疗，原本光明的前途变得黯淡无光。记住，健康是成功的基石！"
+                title: "心理危机",
+                description: "由于长期忽视心理健康，过度学习和工作压力导致你患上了严重的焦虑症。你不得不停止学业进行治疗，原本光明的前途变得黯淡无光。记住，心理健康是成功的基石！"
             },
             {
                 title: "经济困境",
                 description: "家庭经济状况恶化，你不得不放弃学业去打工维持基本生活。虽然你有满腔抱负，但现实的压力让你无法继续追求梦想。经济独立很重要，但也要合理规划开支。"
             },
             {
-                title: "学术不端",
+                title: "作弊开除",
                 description: "一次不理智的作弊行为断送了你的学业生涯。学校给予你开除学籍的处分，这将成为你人生中难以抹去的污点。诚信是立身之本，任何时候都不能触碰底线。"
             }
         ];
 
-        // 场景定义
+        // 场景定义（基于英语专业四年规划）
         const scenes = {
             start: {
                 text: "",
                 choices: [
                     { 
                         text: "专注于提高英语专业技能", 
-                        effect: { englishSkill: [3, 8] },
+                        effect: { englishSkill: [1, 3] },
                         feedback: "专注学习是打好基础的关键"
                     },
                     { 
                         text: "积极参与社团活动", 
-                        effect: { network: [3, 8] },
+                        effect: { network: [1, 3] },
                         feedback: "拓展人际关系网对未来发展非常重要"
                     },
                     { 
                         text: "寻找兼职机会积累社会实践经验", 
-                        effect: { experience: [3, 8], finance: [100, 300] },
+                        effect: { experience: [1, 3], finance: [50, 150] },
                         feedback: "实践经验能让你更好地了解职场需求"
                     }
                 ]
             },
-            // 大一各月场景
+            // 大一各月场景（适应期）
             'year1-september': {
-                text: "新学期开始了！你需要选修一些基础课程，同时也要考虑如何安排课余时间。",
+                text: "新学期开始了！你需要适应大学生活，选修基础课程，同时也要考虑如何安排课余时间。大一是打好基础的关键时期。",
                 choices: [
                     { 
                         text: "报名参加英语角活动", 
-                        effect: { englishSkill: [2, 5], network: [1, 4] },
+                        effect: { englishSkill: [1, 2], network: [0, 1] },
                         feedback: "英语角是练习口语的好机会"
                     },
                     { 
-                        text: "加入学生会锻炼组织能力", 
-                        effect: { network: [3, 7], experience: [1, 4] },
-                        feedback: "学生会工作能培养你的领导力"
+                        text: "加入学生会或社团锻炼组织能力", 
+                        effect: { network: [1, 2], experience: [0, 1] },
+                        feedback: "学生组织能培养你的领导力"
                     },
                     { 
                         text: "制定详细的学习计划", 
-                        effect: { englishSkill: [3, 6] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "良好的学习计划能帮助你更高效地掌握知识"
                     }
                 ]
             },
             'year1-october': {
-                text: "期中考试临近，你需要平衡学习和其他活动的时间分配。",
+                text: "期中考试临近，你需要平衡学习和其他活动的时间分配。基础课程的学习对后续专业课很重要。",
                 choices: [
                     { 
                         text: "集中精力复习备考", 
-                        effect: { englishSkill: [4, 8] },
+                        effect: { englishSkill: [2, 3] },
                         feedback: "专注复习能让知识掌握得更加牢固"
                     },
                     { 
                         text: "参加期中前的学术讲座", 
-                        effect: { englishSkill: [2, 5], network: [1, 4] },
+                        effect: { englishSkill: [1, 2], network: [0, 1] },
                         feedback: "学术讲座能拓宽你的知识视野"
                     },
                     { 
                         text: "与同学组成学习小组", 
-                        effect: { network: [2, 6], englishSkill: [3, 7] },
+                        effect: { network: [1, 2], englishSkill: [1, 2] },
                         feedback: "学习小组能互相促进，共同提高效率"
                     }
                 ]
             },
             'year1-november': {
-                text: "学校举办文化节，有很多展示英语才能的机会。",
+                text: "学校举办文化节，有很多展示英语才能的机会。这是提升实践能力的好时机。",
                 choices: [
                     { 
                         text: "参与英语话剧表演", 
-                        effect: { englishSkill: [4, 8], experience: [2, 5] },
+                        effect: { englishSkill: [1, 3], experience: [1, 2] },
                         feedback: "话剧表演能全面提升你的语言表达能力"
                     },
                     { 
                         text: "组织英语歌曲比赛", 
-                        effect: { network: [5, 9], experience: [3, 7] },
+                        effect: { network: [2, 3], experience: [1, 2] },
                         feedback: "组织活动能锻炼你的策划和执行能力"
                     },
                     { 
                         text: "担任文化节志愿者", 
-                        effect: { experience: [4, 8], network: [2, 6] },
+                        effect: { experience: [1, 3], network: [1, 2] },
                         feedback: "志愿服务既是回馈校园的方式"
                     }
                 ]
             },
             'year1-december': {
-                text: "期末考试周到了，你需要全力以赴应对各科考试。",
+                text: "期末考试周到了，你需要全力以赴应对各科考试。打好基础对后续学习至关重要。",
                 choices: [
                     { 
                         text: "制定详细的复习计划", 
-                        effect: { englishSkill: [5, 9] },
+                        effect: { englishSkill: [2, 3] },
                         feedback: "科学的复习计划能帮助你系统地梳理知识点"
                     },
                     { 
                         text: "与学霸同学一起复习", 
-                        effect: { englishSkill: [4, 7], network: [1, 3] },
+                        effect: { englishSkill: [1, 2], network: [0, 1] },
                         feedback: "向优秀同学学习能快速提升学习方法"
                     },
                     { 
                         text: "参加老师举办的答疑课", 
-                        effect: { englishSkill: [4, 8] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "老师的答疑能帮你解决学习中的疑难问题"
                     }
                 ]
             },
             'year1-january': {
-                text: "寒假开始了，你可以利用这段时间充实自己。",
+                text: "寒假开始了，你可以利用这段时间充实自己。这是提升自我、拓展视野的好机会。",
                 choices: [
                     { 
-                        text: "报名参加海外游学项目", 
-                        effect: { englishSkill: [6, 12], experience: [4, 8], finance: [-1000, -600] },
-                        condition: () => gameState.finance >= 600,
-                        feedback: "海外游学能极大提升你的语言应用能力"
+                        text: "报名参加语言培训项目", 
+                        effect: { englishSkill: [2, 4], finance: [-200, -100] },
+                        condition: () => gameState.finance >= 100,
+                        feedback: "语言培训能提升你的专业技能"
                     },
                     { 
                         text: "找一份与专业相关的实习", 
-                        effect: { experience: [5, 9], finance: [400, 800] },
+                        effect: { experience: [2, 3], finance: [200, 400] },
                         feedback: "专业实习能让你提前接触职场"
                     },
                     { 
                         text: "在家自学准备英语等级考试", 
-                        effect: { englishSkill: [4, 8] },
+                        effect: { englishSkill: [1, 3] },
                         feedback: "假期是自我提升的黄金时间"
                     }
                 ]
             },
             'year1-february': {
-                text: "新学期即将开始，回顾寒假收获，为新学期做准备。",
+                text: "新学期即将开始，回顾寒假收获，为新学期做准备。大一下学期将开始接触更多专业课程。",
                 choices: [
                     { 
                         text: "分享寒假经历给同学们", 
-                        effect: { network: [3, 7], experience: [2, 5] },
+                        effect: { network: [1, 2], experience: [0, 1] },
                         feedback: "分享经历既能巩固所学，又能增进友谊"
                     },
                     { 
                         text: "制定新学期目标计划", 
-                        effect: { englishSkill: [2, 5] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "明确的目标能指引你更有针对性地努力"
                     },
                     { 
                         text: "提前预习新课程内容", 
-                        effect: { englishSkill: [4, 7] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "提前预习能让你在新学期学习中占据主动"
                     }
                 ]
             },
-            // 大二场景
+            // 大二场景（探索期）
             'year2-march': {
-                text: "进入大二下学期，专业课程更加深入。你开始思考未来的方向。",
+                text: "进入大二下学期，专业课程更加深入。你需要开始探索自己的兴趣方向，为未来做准备。",
                 choices: [
                     { 
                         text: "深入学习语言学和文学理论", 
-                        effect: { englishSkill: [5, 9] },
+                        effect: { englishSkill: [2, 3] },
                         feedback: "理论学习能为你的专业素养打下深厚根基"
                     },
                     { 
                         text: "加入学生会或英语协会担任职务", 
-                        effect: { network: [5, 9], experience: [2, 6] },
+                        effect: { network: [2, 3], experience: [1, 2] },
                         feedback: "担任职务能锻炼你的领导力和管理能力"
                     },
                     { 
                         text: "申请暑期实习机会", 
-                        effect: { experience: [4, 8] },
+                        effect: { experience: [1, 3] },
                         feedback: "实习经历是你简历上的亮点"
                     }
                 ]
             },
             'year2-april': {
-                text: "你发现了一个有趣的选修课程——跨文化交际学，这对你很有吸引力。",
+                text: "你发现了一个有趣的选修课程——跨文化交际学，这对你很有吸引力。拓展知识面很重要。",
                 choices: [
                     { 
                         text: "报名选修这门课程", 
-                        effect: { englishSkill: [5, 9], network: [2, 6] },
+                        effect: { englishSkill: [2, 3], network: [1, 2] },
                         feedback: "跨文化交际学能增强你的国际视野"
                     },
                     { 
                         text: "旁听几节课后再决定", 
-                        effect: { englishSkill: [2, 5] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "先了解课程内容再做决定是个谨慎的做法"
                     },
                     { 
                         text: "专心于必修课程", 
-                        effect: { englishSkill: [3, 7] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "优先保证必修课程的质量是明智之举"
                     }
                 ]
             },
             'year2-may': {
-                text: "学校有一个国际交流项目，可以去英国交换学习一个学期。",
+                text: "学校有一个国际交流项目，可以去英国交换学习一个学期。这是提升国际视野的好机会。",
                 choices: [
                     { 
                         text: "积极申请这个项目", 
-                        effect: { englishSkill: [8, 14], experience: [4, 8], finance: [-1800, -1200] },
-                        condition: () => gameState.finance >= 1200,
+                        effect: { englishSkill: [3, 5], experience: [2, 3], finance: [-600, -400] },
+                        condition: () => gameState.finance >= 400,
                         feedback: "国际交流是难得的学习机会"
                     },
                     { 
                         text: "准备申请材料", 
-                        effect: { englishSkill: [4, 7] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "认真准备申请材料是成功的第一步"
                     },
                     { 
                         text: "放弃这次机会，专注国内学习", 
-                        effect: { englishSkill: [2, 5] },
+                        effect: { englishSkill: [1, 2] },
                         feedback: "专注于现有学习资源也是一种稳妥的选择"
                     }
                 ]
             },
-            // 大三场景
+            // 大三场景（定向期）
             'year3-september': {
-                text: "大三了！专业课程更加专业化，你需要为未来做更明确的规划。",
+                text: "大三了！专业课程更加专业化，你需要为未来做更明确的规划。考虑考研、就业或出国。",
                 choices: [
                     { 
                         text: "准备考研，提升学术能力", 
-                        effect: { englishSkill: [6, 10] },
+                        effect: { englishSkill: [2, 4] },
                         feedback: "考研深造能让你在学术道路上走得更远"
                     },
                     { 
                         text: "参加国际交流项目，拓展视野", 
-                        effect: { network: [6, 10], experience: [4, 8] },
+                        effect: { network: [2, 4], experience: [1, 3] },
                         feedback: "国际交流能让你接触多元文化"
                     },
                     { 
                         text: "专注于实习，积累工作经验", 
-                        effect: { experience: [7, 12] },
+                        effect: { experience: [3, 5] },
                         feedback: "工作经验是职场竞争的重要资本"
                     }
                 ]
             },
             'year3-october': {
-                text: "你收到了一家知名外企的实习邀请，但需要减少课程负担。",
+                text: "你收到了一家知名外企的实习邀请，但需要减少课程负担。这是难得的实践机会。",
                 choices: [
                     { 
                         text: "接受实习机会", 
-                        effect: { experience: [8, 14], finance: [600, 1000] },
+                        effect: { experience: [4, 6], finance: [400, 600] },
                         feedback: "知名企业实习经历将为你的简历增色不少"
                     },
                     { 
                         text: "半工半读，平衡两者", 
-                        effect: { experience: [5, 9], englishSkill: [2, 5], finance: [300, 600] },
+                        effect: { experience: [2, 4], englishSkill: [1, 2], finance: [200, 400] },
                         feedback: "平衡学习与实践是大学生活的智慧体现"
                     },
                     { 
                         text: "专心学业，拒绝实习", 
-                        effect: { englishSkill: [4, 8] },
+                        effect: { englishSkill: [2, 3] },
                         feedback: "扎实的专业知识是未来发展的根本保障"
                     }
                 ]
             },
-            // 大四场景
+            // 大四场景（冲刺期）
             'year4-may': {
-                text: "毕业季来临，你需要为毕业后的生活做最终决定。",
+                text: "毕业季来临，你需要为毕业后的生活做最终决定。根据你的积累，现在是时候选择你的职业道路了。",
                 choices: [
                     { 
                         text: "申请研究生院继续深造", 
-                        condition: () => gameState.englishSkill >= 80,
+                        condition: () => gameState.englishSkill >= 70,
                         feedback: "继续深造将为你打开更广阔的发展空间"
                     },
                     { 
                         text: "申请外企工作", 
-                        condition: () => gameState.englishSkill >= 70 && gameState.experience >= 30,
+                        condition: () => gameState.englishSkill >= 60 && gameState.experience >= 20,
                         feedback: "凭借出色的专业能力和实践经验"
                     },
                     { 
                         text: "从事教育行业", 
-                        condition: () => gameState.englishSkill >= 60,
+                        condition: () => gameState.englishSkill >= 50,
                         feedback: "教育事业是一项崇高的职业"
                     },
                     { 
                         text: "进入翻译公司工作", 
-                        condition: () => gameState.englishSkill >= 85,
+                        condition: () => gameState.englishSkill >= 75,
                         feedback: "卓越的语言天赋让你具备了成为专业译员的潜质"
                     },
                     { 
                         text: "自主创业", 
-                        condition: () => gameState.network >= 50 && gameState.experience >= 40,
+                        condition: () => gameState.network >= 40 && gameState.experience >= 30,
                         feedback: "丰富的人脉和实践经验为你创业奠定了基础"
                     },
                     { 
                         text: "从事媒体/出版行业", 
-                        condition: () => gameState.englishSkill >= 65 && gameState.experience >= 25,
+                        condition: () => gameState.englishSkill >= 55 && gameState.experience >= 15,
                         feedback: "你的专业背景让你在媒体行业具备竞争优势"
                     }
                 ]
@@ -784,8 +927,8 @@
                 description: "你进入了媒体和出版行业，成为一名编辑、记者或内容创作者。你的英语专业背景使你能处理国际新闻、引进国外优秀作品，或者为跨国企业提供内容服务。在这个信息时代，你的语言能力和文化敏感性将帮助你在这个领域脱颖而出，成为文化交流的重要推动者。"
             },
             'default': {
-                title: "多元化发展者",
-                description: "虽然没有明确走向某一条特定道路，但你在大学期间全面发展，积累了多方面的技能和经验。这种多元化背景为你打开了多种可能性的大门。你可能会在不同领域间切换，或者找到一个能综合运用你各项能力的独特职位。人生本就充满变数，保持开放的心态将带你走向更广阔的天地。"
+                title: "自由职业者",
+                description: "虽然没有明确走向某一条特定道路，但你在大学期间全面发展，积累了多方面的技能和经验。这种多元化背景为你打开了多种可能性的大门。你选择成为自由职业者，可以灵活地从事翻译、写作、教学等多种工作。自由职业虽然充满挑战，但你的综合能力将帮助你在不同领域间游刃有余。"
             }
         };
 
@@ -852,7 +995,7 @@
             gameState.englishSkill = Math.max(0, gameState.englishSkill);
             gameState.experience = Math.max(0, gameState.experience);
             gameState.network = Math.max(0, gameState.network);
-            gameState.finance = Math.max(-1000, gameState.finance); // 允许轻微负债
+            gameState.finance = Math.max(-2000, gameState.finance); // 允许负债到-2000
             
             return changes;
         }
@@ -869,22 +1012,23 @@
             }
             
             // 检查属性是否过低
-            if (gameState.englishSkill < -10) {
+            if (gameState.englishSkill < -5) {
                 endGameWithBadEnding("由于长期忽视专业学习，你的英语技能严重退化，无法满足毕业要求。");
                 return true;
             }
             
-            if (gameState.experience < -30) {
+            if (gameState.experience < -20) {
                 endGameWithBadEnding("缺乏实践经验让你在求职时屡屡碰壁，最终只能选择与专业无关的工作。");
                 return true;
             }
             
-            if (gameState.network < -20) {
+            if (gameState.network < -10) {
                 endGameWithBadEnding("人际关系的疏远让你错失了许多发展机会，事业发展受限。");
                 return true;
             }
             
-            if (gameState.finance < -3000) {
+            // 财务状况小于-1000时达成经济困境
+            if (gameState.finance < -1000) {
                 endGameWithBadEnding("严重的财务危机迫使你不得不辍学打工，放弃了原本的学业规划。");
                 return true;
             }
@@ -894,7 +1038,7 @@
 
         // 显示随机事件
         function showRandomEvent() {
-            if (Math.random() > 0.8 && !gameState.eventOccurred) { // 降低到20%概率触发事件
+            if (Math.random() > 0.7 && !gameState.eventOccurred) { // 30%概率触发事件
                 const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
                 document.getElementById('event-text').textContent = event.text;
                 document.getElementById('event-display').style.display = 'block';
@@ -941,7 +1085,7 @@
             
             // 每过几个月自动增加一些属性
             if (gameState.monthsPassed % 3 === 0) {
-                gameState.englishSkill += 2;
+                gameState.englishSkill += 1;
                 gameState.network += 1;
             }
             
@@ -1046,7 +1190,7 @@
             gameState.gameOver = true;
             
             // 根据原因选择合适的坏结局描述
-            let badEndingDesc = badEndings[0]; // 默认健康危机
+            let badEndingDesc = badEndings[0]; // 默认心理危机
             if (reason.includes("经济")) badEndingDesc = badEndings[1];
             else if (reason.includes("作弊")) badEndingDesc = badEndings[2];
             
