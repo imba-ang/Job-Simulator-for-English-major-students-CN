@@ -436,7 +436,8 @@
             welcomeShown: false,
             eventsThisYear: 0, // 今年触发的事件数
             lastEventMonth: -1, // 上次事件触发的月份
-            choicesHistory: [] // 选择历史记录
+            choicesHistory: [], // 选择历史记录
+            restCount: 0 // 休息次数统计
         };
 
         // 月份映射
@@ -781,6 +782,31 @@
                     }
                 ]
             },
+            'year2-june': {
+                text: " summer vacation is approaching. You need to plan how to spend your summer break effectively.",
+                choices: [
+                    { 
+                        text: "Apply for a summer internship at a foreign company", 
+                        effect: { experience: [3, 5], network: [2, 4] },
+                        feedback: "Internship experience will greatly enhance your resume"
+                    },
+                    { 
+                        text: "Take an intensive English training course", 
+                        effect: { englishSkill: [3, 5] },
+                        feedback: "Intensive training can significantly improve your language skills"
+                    },
+                    { 
+                        text: "Travel to an English-speaking country for cultural exchange", 
+                        effect: { englishSkill: [2, 4], experience: [2, 3] },
+                        feedback: "Cultural exchange broadens your horizons"
+                    },
+                    { 
+                        text: "Rest and relax to recharge your energy", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "Proper rest helps maintain good mental health"
+                    }
+                ]
+            },
             // 大三场景（定向期）
             'year3-september': {
                 text: "大三了！专业课程更加专业化，你需要为未来做更明确的规划。考虑考研、就业或出国。",
@@ -832,38 +858,63 @@
                     }
                 ]
             },
+            'year3-november': {
+                text: "你正在考虑是否要申请研究生院。这是一个重要的决定，需要仔细权衡。",
+                choices: [
+                    { 
+                        text: "全力准备研究生入学考试", 
+                        effect: { englishSkill: [3, 5] },
+                        feedback: "充分准备是成功的关键"
+                    },
+                    { 
+                        text: "同时准备考研和求职", 
+                        effect: { englishSkill: [2, 3], experience: [2, 3] },
+                        feedback: "多元化准备增加成功机会"
+                    },
+                    { 
+                        text: "专注于提升专业技能和实践经验", 
+                        effect: { englishSkill: [2, 3], experience: [2, 3] },
+                        feedback: "扎实的基础是未来发展的保障"
+                    },
+                    { 
+                        text: "休息一下，放松心情", 
+                        effect: { mentalHealth: [5, 10] },
+                        feedback: "适当的休息有助于保持良好的心理状态"
+                    }
+                ]
+            },
             // 大四场景（冲刺期）
             'year4-may': {
                 text: "毕业季来临，你需要为毕业后的生活做最终决定。根据你的积累，现在是时候选择你的职业道路了。",
                 choices: [
                     { 
                         text: "申请研究生院继续深造", 
-                        condition: () => gameState.englishSkill >= 70,
+                        condition: () => gameState.englishSkill >= 60,
                         feedback: "继续深造将为你打开更广阔的发展空间"
                     },
                     { 
                         text: "申请外企工作", 
-                        condition: () => gameState.englishSkill >= 60 && gameState.experience >= 20,
+                        condition: () => gameState.englishSkill >= 50 && gameState.experience >= 15,
                         feedback: "凭借出色的专业能力和实践经验"
                     },
                     { 
                         text: "从事教育行业", 
-                        condition: () => gameState.englishSkill >= 50,
+                        condition: () => gameState.englishSkill >= 40,
                         feedback: "教育事业是一项崇高的职业"
                     },
                     { 
                         text: "进入翻译公司工作", 
-                        condition: () => gameState.englishSkill >= 75,
+                        condition: () => gameState.englishSkill >= 65,
                         feedback: "卓越的语言天赋让你具备了成为专业译员的潜质"
                     },
                     { 
                         text: "自主创业", 
-                        condition: () => gameState.network >= 40 && gameState.experience >= 30,
+                        condition: () => gameState.network >= 30 && gameState.experience >= 20,
                         feedback: "丰富的人脉和实践经验为你创业奠定了基础"
                     },
                     { 
                         text: "从事媒体/出版行业", 
-                        condition: () => gameState.englishSkill >= 55 && gameState.experience >= 15,
+                        condition: () => gameState.englishSkill >= 45 && gameState.experience >= 10,
                         feedback: "你的专业背景让你在媒体行业具备竞争优势"
                     },
                     { 
@@ -1111,8 +1162,8 @@
             document.getElementById('event-display').style.display = 'none';
             gameState.eventOccurred = false;
             
-            // 每月心理健康轻微下降
-            gameState.mentalHealth = Math.max(0, gameState.mentalHealth - 3);
+            // 每月心理健康下降
+            gameState.mentalHealth = Math.max(0, gameState.mentalHealth - 5);
             
             gameState.month++;
             gameState.monthsPassed++;
@@ -1184,6 +1235,11 @@
                                 month: gameState.month,
                                 choice: choice.text
                             });
+                            
+                            // 如果是休息选项，增加计数
+                            if (choice.text.includes("休息")) {
+                                gameState.restCount++;
+                            }
                             
                             // 应用选择效果
                             let changes = [];
@@ -1266,6 +1322,7 @@
             gameState.eventsThisYear = 0;
             gameState.lastEventMonth = -1;
             gameState.choicesHistory = [];
+            gameState.restCount = 0;
             
             document.getElementById('career-result').style.display = 'none';
             document.getElementById('diagnosis-report').style.display = 'none';
