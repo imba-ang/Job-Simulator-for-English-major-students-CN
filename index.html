@@ -1277,7 +1277,7 @@
                 text: "毕业季来临，你需要为毕业后的生活做最终决定。根据你的积累，现在是时候选择你的职业道路了。",
                 choices: [
                     { 
-                        text: "申请研究生院继续深造", 
+                        text: "申请研究生继续深造", 
                         condition: () => gameState.englishSkill >= 70 && gameState.workExperience >= 40 && gameState.experience >= 40,
                         feedback: "继续深造将为你打开更广阔的发展空间"
                     },
@@ -1680,8 +1680,8 @@
             document.getElementById('event-display').style.display = 'none';
             gameState.eventOccurred = false;
             
-            // 每月心理健康随机下降0-5点
-            const mentalDrop = Math.floor(Math.random() * 6);
+            // 每月心理健康随机下降2-8点
+            const mentalDrop = 2 + Math.floor(Math.random() * 7);
             gameState.mentalHealth = Math.max(0, gameState.mentalHealth - mentalDrop);
             
             gameState.month++;
@@ -1744,6 +1744,9 @@
             } else {
                 document.getElementById('story-text').textContent = scene.text;
             }
+
+            // 更新当前场景状态
+            gameState.currentScene = sceneKey;
             
             // 生成选择按钮
             const choicesContainer = document.getElementById('choices-container');
