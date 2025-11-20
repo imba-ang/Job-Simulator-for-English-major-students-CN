@@ -378,7 +378,7 @@
             line-height: 1.4;
         }
         
-        .restart-btn {
+        .start-btn, .restart-btn {
             display: block;
             width: 180px;
             margin: 15px auto;
@@ -394,7 +394,7 @@
             overflow: hidden;
         }
         
-        .restart-btn::before {
+        .start-btn::before, .restart-btn::before {
             content: "";
             position: absolute;
             top: 0;
@@ -405,13 +405,17 @@
             transition: 0.5s;
         }
         
-        .restart-btn:hover::before {
+        .start-btn:hover::before, .restart-btn:hover::before {
             left: 100%;
         }
         
-        .restart-btn:hover {
+        .start-btn:hover, .restart-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+        }
+        
+        .start-btn {
+            display: block;
         }
         
         footer {
@@ -589,16 +593,16 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <div class="stat-label">人脉关系</div>
-                    <div class="stat-value" id="network-value">20</div>
+                    <div class="stat-icon"><i class="fas fa-user-tie"></i></div>
+                    <div class="stat-label">学生工作经历</div>
+                    <div class="stat-value" id="work-value">20</div>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="network-progress" style="width: 20%"></div>
+                        <div class="progress-fill" id="work-progress" style="width: 20%"></div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-heartbeat"></i></div>
-                    <div class="stat-label">心理健康</div>
+                    <div class="stat-label">心理健康指数</div>
                     <div class="stat-value" id="mental-value">100</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="mental-progress" style="width: 100%"></div>
@@ -636,7 +640,8 @@
                 <div id="report-content"></div>
             </div>
             
-            <button class="restart-btn" id="restart-btn">重新开始游戏</button>
+            <button class="start-btn" id="start-btn">开始游戏</button>
+            <button class="restart-btn" id="restart-btn" style="display: none;">重新开始游戏</button>
         </div>
         
         <footer>
@@ -651,7 +656,7 @@
             month: 9, // 9月开学
             englishSkill: 20,
             experience: 20,
-            network: 20,
+            workExperience: 20, // 学生工作经历
             mentalHealth: 100,
             currentScene: 'start',
             gameOver: false,
@@ -683,7 +688,7 @@
         const achievements = [
             { id: 'first_choice', name: '第一步', description: '做出第一个选择', icon: 'fa-star', unlocked: false },
             { id: 'skill_50', name: '语言达人', description: '英语技能达到50点', icon: 'fa-book', unlocked: false },
-            { id: 'network_50', name: '社交高手', description: '人脉关系达到50点', icon: 'fa-users', unlocked: false },
+            { id: 'work_50', name: '工作能手', description: '学生工作经历达到50点', icon: 'fa-user-tie', unlocked: false },
             { id: 'experience_50', name: '实践专家', description: '实践经验达到50点', icon: 'fa-briefcase', unlocked: false },
             { id: 'rest_5', name: '健康第一', description: '累计休息5次', icon: 'fa-heartbeat', unlocked: false },
             { id: 'graduate', name: '毕业啦！', description: '顺利完成大学生涯', icon: 'fa-graduation-cap', unlocked: false }
@@ -693,15 +698,15 @@
         const randomEvents = [
             {
                 text: "你参加的英语演讲比赛获得了一等奖！这大大提升了你的自信心和表达能力。",
-                effect: { englishSkill: [3, 6], network: [2, 4] }
+                effect: { englishSkill: [3, 6], workExperience: [2, 4] }
             },
             {
                 text: "图书馆举办免费的雅思培训课程，你报名参加了并取得了很大进步。",
                 effect: { englishSkill: [2, 5] }
             },
             {
-                text: "室友介绍你认识了一位在外企工作的学长，你们成了朋友。",
-                effect: { network: [3, 6] }
+                text: "你在学生会担任重要职务，积累了丰富的组织管理经验。",
+                effect: { workExperience: [3, 6] }
             },
             {
                 text: "你意外发现了一个校内兼职机会，既能赚取生活费又能积累经验。",
@@ -709,19 +714,19 @@
             },
             {
                 text: "你参加的志愿者活动得到了媒体报道，提升了你的社会影响力。",
-                effect: { network: [3, 5], experience: [1, 3] }
+                effect: { workExperience: [3, 5], experience: [1, 3] }
             },
             {
                 text: "你在网上发表的英语学习心得被大量转发，建立了个人品牌。",
-                effect: { network: [4, 7] }
+                effect: { workExperience: [4, 7] }
             },
             {
                 text: "你帮助同学完成了一个重要项目，获得了大家的认可。",
-                effect: { network: [2, 4], experience: [1, 2] }
+                effect: { workExperience: [2, 4], experience: [1, 2] }
             },
             {
                 text: "你参加的社团活动让你结识了志同道合的朋友。",
-                effect: { network: [3, 5] }
+                effect: { workExperience: [3, 5] }
             },
             {
                 text: "你获得了国家奖学金，这不仅是经济上的帮助，更是对你学业的认可。",
@@ -729,31 +734,31 @@
             },
             {
                 text: "你成功申请到了一个海外交流项目，这将大大提升你的国际视野。",
-                effect: { englishSkill: [5, 8], experience: [3, 5], network: [4, 6] }
+                effect: { englishSkill: [5, 8], experience: [3, 5], workExperience: [4, 6] }
             },
             {
                 text: "你在一个知名企业实习期间表现出色，获得了实习证明和推荐信。",
-                effect: { experience: [4, 7], network: [3, 5] }
+                effect: { experience: [4, 7], workExperience: [3, 5] }
             },
             {
                 text: "你参加了一个创业比赛，虽然没有获奖，但积累了宝贵的经验。",
-                effect: { experience: [2, 4], network: [1, 3] }
+                effect: { experience: [2, 4], workExperience: [1, 3] }
             },
             {
-                text: "你在一个学术会议上发表了论文，提升了学术声誉。",
-                effect: { englishSkill: [4, 6], network: [3, 5] }
+                text: "你参加了一个学术会议上发表了论文，提升了学术声誉。",
+                effect: { englishSkill: [4, 6], workExperience: [3, 5] }
             },
             {
                 text: "你参加了一个公益活动，获得了社会好评。",
-                effect: { network: [4, 6], experience: [2, 3] }
+                effect: { workExperience: [4, 6], experience: [2, 3] }
             },
             {
                 text: "你因为一次小组作业中表现出色，被老师推荐为优秀学生代表。",
-                effect: { englishSkill: [3, 5], network: [2, 4] }
+                effect: { englishSkill: [3, 5], workExperience: [2, 4] }
             },
             {
                 text: "你参加了一个英语辩论赛并获得最佳辩手称号，极大地提升了思辨能力。",
-                effect: { englishSkill: [3, 5], network: [2, 4] }
+                effect: { englishSkill: [3, 5], workExperience: [2, 4] }
             },
             {
                 text: "你成功通过了专业八级考试，这是对你英语水平的极大认可。",
@@ -765,11 +770,11 @@
             },
             {
                 text: "你成为了学院学生会主席，锻炼了领导能力。",
-                effect: { network: [5, 7], experience: [3, 5] }
+                effect: { workExperience: [5, 7], experience: [3, 5] }
             },
             {
                 text: "你获得了一个国际组织的实习机会，开阔了国际视野。",
-                effect: { englishSkill: [4, 6], experience: [4, 6], network: [3, 5] }
+                effect: { englishSkill: [4, 6], experience: [4, 6], workExperience: [3, 5] }
             }
         ];
 
@@ -799,7 +804,7 @@
                     },
                     { 
                         text: "积极参与社团活动", 
-                        effect: { network: [1, 2] },
+                        effect: { workExperience: [1, 2] },
                         feedback: "拓展人际关系网对未来发展非常重要"
                     },
                     { 
@@ -820,12 +825,12 @@
                 choices: [
                     { 
                         text: "报名参加英语角活动", 
-                        effect: { englishSkill: [1, 2], network: [0, 1] },
+                        effect: { englishSkill: [1, 2], workExperience: [0, 1] },
                         feedback: "英语角是练习口语的好机会"
                     },
                     { 
                         text: "加入学生会或社团锻炼组织能力", 
-                        effect: { network: [1, 2], experience: [0, 1] },
+                        effect: { workExperience: [1, 2], experience: [0, 1] },
                         feedback: "学生组织能培养你的领导力"
                     },
                     { 
@@ -850,12 +855,12 @@
                     },
                     { 
                         text: "参加期中前的学术讲座", 
-                        effect: { englishSkill: [1, 2], network: [0, 1] },
+                        effect: { englishSkill: [1, 2], workExperience: [0, 1] },
                         feedback: "学术讲座能拓宽你的知识视野"
                     },
                     { 
                         text: "与同学组成学习小组", 
-                        effect: { network: [1, 2], englishSkill: [1, 2] },
+                        effect: { workExperience: [1, 2], englishSkill: [1, 2] },
                         feedback: "学习小组能互相促进，共同提高效率"
                     },
                     { 
@@ -875,12 +880,12 @@
                     },
                     { 
                         text: "组织英语歌曲比赛", 
-                        effect: { network: [2, 3], experience: [1, 2] },
+                        effect: { workExperience: [2, 3], experience: [1, 2] },
                         feedback: "组织活动能锻炼你的策划和执行能力"
                     },
                     { 
                         text: "担任文化节志愿者", 
-                        effect: { experience: [1, 3], network: [1, 2] },
+                        effect: { experience: [1, 3], workExperience: [1, 2] },
                         feedback: "志愿服务既是回馈校园的方式"
                     },
                     { 
@@ -900,7 +905,7 @@
                     },
                     { 
                         text: "与学霸同学一起复习", 
-                        effect: { englishSkill: [1, 2], network: [0, 1] },
+                        effect: { englishSkill: [1, 2], workExperience: [0, 1] },
                         feedback: "向优秀同学学习能快速提升学习方法"
                     },
                     { 
@@ -945,7 +950,7 @@
                 choices: [
                     { 
                         text: "分享寒假经历给同学们", 
-                        effect: { network: [1, 2], experience: [0, 1] },
+                        effect: { workExperience: [1, 2], experience: [0, 1] },
                         feedback: "分享经历既能巩固所学，又能增进友谊"
                     },
                     { 
@@ -976,7 +981,7 @@
                     },
                     { 
                         text: "加入学生会或英语协会担任职务", 
-                        effect: { network: [2, 3], experience: [1, 2] },
+                        effect: { workExperience: [2, 3], experience: [1, 2] },
                         feedback: "担任职务能锻炼你的领导力和管理能力"
                     },
                     { 
@@ -996,7 +1001,7 @@
                 choices: [
                     { 
                         text: "报名选修这门课程", 
-                        effect: { englishSkill: [2, 3], network: [1, 2] },
+                        effect: { englishSkill: [2, 3], workExperience: [1, 2] },
                         feedback: "跨文化交际学能增强你的国际视野"
                     },
                     { 
@@ -1021,7 +1026,7 @@
                 choices: [
                     { 
                         text: "积极申请这个项目", 
-                        effect: { englishSkill: [3, 5], experience: [2, 3], network: [4, 6] },
+                        effect: { englishSkill: [3, 5], experience: [2, 3], workExperience: [4, 6] },
                         feedback: "国际交流是难得的学习机会"
                     },
                     { 
@@ -1046,7 +1051,7 @@
                 choices: [
                     { 
                         text: "申请外国公司的暑期实习", 
-                        effect: { experience: [3, 5], network: [2, 4] },
+                        effect: { experience: [3, 5], workExperience: [2, 4] },
                         feedback: "实习经验将大大提高你的简历质量"
                     },
                     { 
@@ -1071,7 +1076,7 @@
                 choices: [
                     { 
                         text: "参加在线英语学习社区", 
-                        effect: { englishSkill: [2, 3], network: [1, 2] },
+                        effect: { englishSkill: [2, 3], workExperience: [1, 2] },
                         feedback: "在线社区能让你接触到全球英语学习者"
                     },
                     { 
@@ -1081,7 +1086,7 @@
                     },
                     { 
                         text: "参与志愿服务活动", 
-                        effect: { experience: [1, 3], network: [1, 2] },
+                        effect: { experience: [1, 3], workExperience: [1, 2] },
                         feedback: "志愿服务能培养你的社会责任感"
                     },
                     { 
@@ -1096,7 +1101,7 @@
                 choices: [
                     { 
                         text: "总结暑假收获并与同学分享", 
-                        effect: { network: [1, 2], experience: [0, 1] },
+                        effect: { workExperience: [1, 2], experience: [0, 1] },
                         feedback: "分享经历既能巩固所学，又能增进友谊"
                     },
                     { 
@@ -1127,7 +1132,7 @@
                     },
                     { 
                         text: "参加国际交流项目，拓展视野", 
-                        effect: { network: [2, 4], experience: [1, 3] },
+                        effect: { workExperience: [2, 4], experience: [1, 3] },
                         feedback: "国际交流能让你接触多元文化"
                     },
                     { 
@@ -1202,7 +1207,7 @@
                     },
                     { 
                         text: "参加模拟面试和求职培训", 
-                        effect: { experience: [2, 4], network: [1, 2] },
+                        effect: { experience: [2, 4], workExperience: [1, 2] },
                         feedback: "模拟面试能提升你的求职竞争力"
                     },
                     { 
@@ -1247,7 +1252,7 @@
                 choices: [
                     { 
                         text: "参加春季招聘会", 
-                        effect: { experience: [2, 4], network: [2, 3] },
+                        effect: { experience: [2, 4], workExperience: [2, 3] },
                         feedback: "招聘会是寻找工作机会的重要途径"
                     },
                     { 
@@ -1273,32 +1278,32 @@
                 choices: [
                     { 
                         text: "申请研究生院继续深造", 
-                        condition: () => gameState.englishSkill >= 60,
+                        condition: () => gameState.englishSkill >= 70 && gameState.workExperience >= 40 && gameState.experience >= 40,
                         feedback: "继续深造将为你打开更广阔的发展空间"
                     },
                     { 
                         text: "申请外企工作", 
-                        condition: () => gameState.englishSkill >= 50 && gameState.experience >= 15,
+                        condition: () => gameState.englishSkill >= 60 && gameState.experience >= 60,
                         feedback: "凭借出色的专业能力和实践经验"
                     },
                     { 
                         text: "从事教育行业", 
-                        condition: () => gameState.englishSkill >= 40,
+                        condition: () => gameState.englishSkill >= 70 && gameState.workExperience >= 60,
                         feedback: "教育事业是一项崇高的职业"
                     },
                     { 
                         text: "进入翻译公司工作", 
-                        condition: () => gameState.englishSkill >= 65,
+                        condition: () => gameState.englishSkill >= 80 && gameState.experience >= 50,
                         feedback: "卓越的语言天赋让你具备了成为专业译员的潜质"
                     },
                     { 
                         text: "自主创业", 
-                        condition: () => gameState.network >= 30 && gameState.experience >= 20,
+                        condition: () => gameState.experience >= 80 && gameState.workExperience >= 40,
                         feedback: "丰富的人脉和实践经验为你创业奠定了基础"
                     },
                     { 
                         text: "从事媒体/出版行业", 
-                        condition: () => gameState.englishSkill >= 45 && gameState.experience >= 10,
+                        condition: () => gameState.englishSkill >= 70 && gameState.experience >= 60,
                         feedback: "你的专业背景让你在媒体行业具备竞争优势"
                     },
                     { 
@@ -1318,7 +1323,7 @@
                     },
                     { 
                         text: "参加各类招聘会和宣讲会", 
-                        effect: { experience: [2, 4], network: [2, 3] },
+                        effect: { experience: [2, 4], workExperience: [2, 3] },
                         feedback: "积极参与招聘活动能增加就业机会"
                     },
                     { 
@@ -1338,7 +1343,7 @@
                 choices: [
                     { 
                         text: "参加毕业典礼和告别活动", 
-                        effect: { network: [2, 3] },
+                        effect: { workExperience: [2, 3] },
                         feedback: "珍惜与同学老师的最后一段时光"
                     },
                     { 
@@ -1392,16 +1397,6 @@
             }
         };
 
-        // 职业匹配度权重
-        const careerWeights = {
-            '研究生': { englishSkill: 0.5, experience: 0.2, network: 0.3 },
-            '外企员工': { englishSkill: 0.4, experience: 0.4, network: 0.2 },
-            '教师': { englishSkill: 0.6, experience: 0.3, network: 0.1 },
-            '翻译': { englishSkill: 0.7, experience: 0.2, network: 0.1 },
-            '创业者': { englishSkill: 0.2, experience: 0.4, network: 0.4 },
-            '媒体从业者': { englishSkill: 0.5, experience: 0.3, network: 0.2 }
-        };
-
         // 获取当前场景键
         function getCurrentSceneKey() {
             return `year${gameState.year}-${months[gameState.month].toLowerCase()}`;
@@ -1427,13 +1422,13 @@
         function updateStats() {
             document.getElementById('skill-value').textContent = gameState.englishSkill;
             document.getElementById('experience-value').textContent = gameState.experience;
-            document.getElementById('network-value').textContent = gameState.network;
+            document.getElementById('work-value').textContent = gameState.workExperience;
             document.getElementById('mental-value').textContent = gameState.mentalHealth;
             
             // 更新进度条
             document.getElementById('skill-progress').style.width = `${Math.min(100, Math.max(0, gameState.englishSkill))}%`;
             document.getElementById('experience-progress').style.width = `${Math.min(100, Math.max(0, gameState.experience))}%`;
-            document.getElementById('network-progress').style.width = `${Math.min(100, Math.max(0, gameState.network))}%`;
+            document.getElementById('work-progress').style.width = `${Math.min(100, Math.max(0, gameState.workExperience))}%`;
             document.getElementById('mental-progress').style.width = `${Math.min(100, Math.max(0, gameState.mentalHealth))}%`;
         }
 
@@ -1450,22 +1445,22 @@
                 gameState.experience += value;
                 changes.push(`社会实践经验${value >= 0 ? '+' : ''}${value}`);
             }
-            if (effect.network !== undefined) {
-                const value = getRandomValue(effect.network);
-                gameState.network += value;
-                changes.push(`人脉关系${value >= 0 ? '+' : ''}${value}`);
+            if (effect.workExperience !== undefined) {
+                const value = getRandomValue(effect.workExperience);
+                gameState.workExperience += value;
+                changes.push(`学生工作经历${value >= 0 ? '+' : ''}${value}`);
             }
             if (effect.mentalHealth !== undefined) {
                 const value = getRandomValue(effect.mentalHealth);
                 gameState.mentalHealth += value;
                 gameState.mentalHealth = Math.min(100, Math.max(0, gameState.mentalHealth));
-                changes.push(`心理健康${value >= 0 ? '+' : ''}${value}`);
+                changes.push(`心理健康指数${value >= 0 ? '+' : ''}${value}`);
             }
             
             // 确保属性不为负数
             gameState.englishSkill = Math.max(0, gameState.englishSkill);
             gameState.experience = Math.max(0, gameState.experience);
-            gameState.network = Math.max(0, gameState.network);
+            gameState.workExperience = Math.max(0, gameState.workExperience);
             gameState.mentalHealth = Math.min(100, Math.max(0, gameState.mentalHealth));
             
             return changes;
@@ -1473,19 +1468,36 @@
 
         // 计算职业匹配度
         function calculateMatchScore(career) {
-            const weights = careerWeights[career] || { englishSkill: 0.33, experience: 0.33, network: 0.34 };
             let score = 0;
             
-            score += gameState.englishSkill * weights.englishSkill;
-            score += gameState.experience * weights.experience;
-            score += gameState.network * weights.network;
+            switch(career) {
+                case '研究生':
+                    score = gameState.englishSkill * 0.4 + gameState.workExperience * 0.3 + gameState.experience * 0.3;
+                    break;
+                case '外企员工':
+                    score = gameState.englishSkill * 0.5 + gameState.experience * 0.5;
+                    break;
+                case '教师':
+                    score = gameState.englishSkill * 0.6 + gameState.workExperience * 0.4;
+                    break;
+                case '翻译':
+                    score = gameState.englishSkill * 0.7 + gameState.experience * 0.3;
+                    break;
+                case '创业者':
+                    score = gameState.experience * 0.6 + gameState.workExperience * 0.4;
+                    break;
+                case '媒体从业者':
+                    score = gameState.englishSkill * 0.4 + gameState.experience * 0.6;
+                    break;
+                default:
+                    score = (gameState.englishSkill + gameState.experience + gameState.workExperience) / 3;
+            }
             
             return Math.min(100, Math.round(score));
         }
 
         // 生成就业诊断报告
         function generateDiagnosisReport(career) {
-            const weights = careerWeights[career] || { englishSkill: 0.33, experience: 0.33, network: 0.34 };
             let report = '<div class="report-section">';
             
             // 优势分析
@@ -1493,11 +1505,11 @@
             if (gameState.englishSkill >= 70) {
                 report += '<li>英语专业技能非常出色，具备扎实的语言基础</li>';
             }
-            if (gameState.experience >= 40) {
+            if (gameState.experience >= 60) {
                 report += '<li>拥有丰富的社会实践经验，实践能力强</li>';
             }
-            if (gameState.network >= 50) {
-                report += '<li>人脉关系广泛，社交能力强</li>';
+            if (gameState.workExperience >= 50) {
+                report += '<li>学生工作经历丰富，组织管理能力强</li>';
             }
             if (gameState.mentalHealth >= 80) {
                 report += '<li>心理健康状况良好，抗压能力强</li>';
@@ -1512,8 +1524,8 @@
             if (gameState.experience < 20) {
                 report += '<li>社会实践经验不足，建议多参与实习和志愿活动</li>';
             }
-            if (gameState.network < 30) {
-                report += '<li>人脉关系相对薄弱，建议多参与社交活动</li>';
+            if (gameState.workExperience < 30) {
+                report += '<li>学生工作经历相对薄弱，建议多参与学生组织活动</li>';
             }
             if (gameState.mentalHealth < 50) {
                 report += '<li>心理健康状况需要关注，建议适当休息调整</li>';
@@ -1558,8 +1570,8 @@
             if (gameState.experience < 30) {
                 report += '<li>多参与实习、项目和志愿活动，积累实践经验</li>';
             }
-            if (gameState.network < 40) {
-                report += '<li>积极参加行业活动和社交聚会，拓展人脉关系</li>';
+            if (gameState.workExperience < 40) {
+                report += '<li>积极参与学生组织和社团活动，积累组织管理经验</li>';
             }
             if (gameState.mentalHealth < 70) {
                 report += '<li>注意劳逸结合，保持良好的心理状态</li>';
@@ -1621,9 +1633,9 @@
                 unlockAchievement('skill_50');
             }
             
-            // 人脉达到50
-            if (gameState.network >= 50 && !gameState.achievements.includes('network_50')) {
-                unlockAchievement('network_50');
+            // 工作经历达到50
+            if (gameState.workExperience >= 50 && !gameState.achievements.includes('work_50')) {
+                unlockAchievement('work_50');
             }
             
             // 经验达到50
@@ -1668,8 +1680,9 @@
             document.getElementById('event-display').style.display = 'none';
             gameState.eventOccurred = false;
             
-            // 每月心理健康下降
-            gameState.mentalHealth = Math.max(0, gameState.mentalHealth - 5);
+            // 每月心理健康随机下降0-5点
+            const mentalDrop = Math.floor(Math.random() * 6);
+            gameState.mentalHealth = Math.max(0, gameState.mentalHealth - mentalDrop);
             
             gameState.month++;
             gameState.monthsPassed++;
@@ -1690,7 +1703,7 @@
             // 每过几个月自动增加一些属性
             if (gameState.monthsPassed % 3 === 0) {
                 gameState.englishSkill += 1;
-                gameState.network += 1;
+                gameState.workExperience += 1;
             }
             
             // 触发随机事件
@@ -1701,7 +1714,7 @@
             
             // 检查是否到达大四五月（游戏结束）
             if (gameState.year === 4 && gameState.month === 6) {
-                endGame('default');
+                endGame();
                 return;
             }
             
@@ -1716,7 +1729,12 @@
             
             // 获取当前场景
             const sceneKey = getCurrentSceneKey();
-            const scene = scenes[sceneKey] || scenes[gameState.currentScene];
+            let scene = scenes[sceneKey];
+            
+            // 如果当前月份场景不存在，使用默认场景
+            if (!scene) {
+                scene = scenes[gameState.currentScene];
+            }
             
             // 显示场景文本（欢迎语只在开始时显示一次）
             if (gameState.currentScene === 'start' && !gameState.welcomeShown) {
@@ -1802,14 +1820,55 @@
         // 结束游戏（好结局）
         function endGame(career) {
             gameState.gameOver = true;
-            const careerInfo = careerPaths[career] || careerPaths['default'];
+            
+            // 确定最佳职业路径
+            let bestCareer = 'default';
+            let bestScore = 0;
+            
+            // 检查是否有满足特定职业条件的
+            if (gameState.englishSkill >= 70 && gameState.workExperience >= 40 && gameState.experience >= 40) {
+                bestCareer = '研究生';
+                bestScore = calculateMatchScore('研究生');
+            }
+            
+            if (gameState.englishSkill >= 60 && gameState.experience >= 60 && calculateMatchScore('外企员工') > bestScore) {
+                bestCareer = '外企员工';
+                bestScore = calculateMatchScore('外企员工');
+            }
+            
+            if (gameState.englishSkill >= 70 && gameState.workExperience >= 60 && calculateMatchScore('教师') > bestScore) {
+                bestCareer = '教师';
+                bestScore = calculateMatchScore('教师');
+            }
+            
+            if (gameState.englishSkill >= 80 && gameState.experience >= 50 && calculateMatchScore('翻译') > bestScore) {
+                bestCareer = '翻译';
+                bestScore = calculateMatchScore('翻译');
+            }
+            
+            if (gameState.experience >= 80 && gameState.workExperience >= 40 && calculateMatchScore('创业者') > bestScore) {
+                bestCareer = '创业者';
+                bestScore = calculateMatchScore('创业者');
+            }
+            
+            if (gameState.englishSkill >= 70 && gameState.experience >= 60 && calculateMatchScore('媒体从业者') > bestScore) {
+                bestCareer = '媒体从业者';
+                bestScore = calculateMatchScore('媒体从业者');
+            }
+            
+            // 如果传入了特定职业，使用传入的职业
+            if (career) {
+                bestCareer = career;
+            }
+            
+            const careerInfo = careerPaths[bestCareer] || careerPaths['default'];
             
             document.getElementById('career-title').textContent = careerInfo.title;
             document.getElementById('career-description').textContent = careerInfo.description;
             document.getElementById('career-result').style.display = 'block';
             
             // 生成诊断报告
-            const reportContent = generateDiagnosisReport(career);
+            const reportContent = generateDiagnosisReport(bestCareer);
             document.getElementById('report-content').innerHTML = reportContent;
             document.getElementById('diagnosis-report').style.display = 'block';
             
@@ -1820,5 +1879,83 @@
             unlockAchievement('graduate');
         }
 
+        // 开始游戏
+        function startGame() {
+            // 重置游戏状态
+            gameState.year = 1;
+            gameState.month = 9;
+            gameState.englishSkill = 20;
+            gameState.experience = 20;
+            gameState.workExperience = 20;
+            gameState.mentalHealth = 100;
+            gameState.currentScene = 'year1-september';
+            gameState.gameOver = false;
+            gameState.eventOccurred = false;
+            gameState.monthsPassed = 0;
+            gameState.eventsThisYear = 0;
+            gameState.lastEventMonth = -1;
+            gameState.choicesHistory = [];
+            gameState.restCount = 0;
+            gameState.achievements = [];
+            gameState.totalChoicesMade = 0;
+            
+            // 隐藏开始按钮，显示游戏内容
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('career-result').style.display = 'none';
+            document.getElementById('diagnosis-report').style.display = 'none';
+            document.getElementById('event-display').style.display = 'none';
+            document.getElementById('feedback-display').style.display = 'none';
+            
+            // 重置成就状态
+            achievements.forEach(ach => ach.unlocked = false);
+            
+            // 更新显示
+            updateDisplay();
+        }
+
         // 重新开始游戏
-        func
+        function restartGame() {
+            // 重置游戏状态
+            gameState.year = 1;
+            gameState.month = 9;
+            gameState.englishSkill = 20;
+            gameState.experience = 20;
+            gameState.workExperience = 20;
+            gameState.mentalHealth = 100;
+            gameState.currentScene = 'year1-september';
+            gameState.gameOver = false;
+            gameState.eventOccurred = false;
+            gameState.monthsPassed = 0;
+            gameState.eventsThisYear = 0;
+            gameState.lastEventMonth = -1;
+            gameState.choicesHistory = [];
+            gameState.restCount = 0;
+            gameState.achievements = [];
+            gameState.totalChoicesMade = 0;
+            
+            // 隐藏结束界面
+            document.getElementById('career-result').style.display = 'none';
+            document.getElementById('diagnosis-report').style.display = 'none';
+            document.getElementById('event-display').style.display = 'none';
+            document.getElementById('feedback-display').style.display = 'none';
+            document.getElementById('choices-container').style.display = 'grid'; // 重新显示选择按钮容器
+            
+            // 重置成就状态
+            achievements.forEach(ach => ach.unlocked = false);
+            
+            // 重新显示开始按钮，隐藏重新开始按钮
+            document.getElementById('start-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+        }
+
+        // 初始化游戏
+        document.getElementById('start-btn').addEventListener('click', startGame);
+        document.getElementById('restart-btn').addEventListener('click', restartGame);
+
+        // 初始显示
+        updateStats();
+        updateAchievements();
+    </script>
+</body>
+</html>
