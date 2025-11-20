@@ -1950,15 +1950,11 @@
             // 重新显示开始按钮，隐藏重新开始按钮
             document.getElementById('start-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
+            
+            // 更新显示
+            updateDisplay();
         }
 
         // 初始化游戏
         document.getElementById('start-btn').addEventListener('click', startGame);
         document.getElementById('restart-btn').addEventListener('click', restartGame);
-
-        // 初始显示
-        updateStats();
-        updateAchievements();
-    </script>
-</body>
-</html>
